@@ -1,0 +1,44 @@
+services:
+  backend:
+    container_name: backend
+    build: .
+    ports:
+      - "8545:8545"
+    volumes:
+      - .:/app
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: password
+      DB_NAME: books-store
+    entrypoint:
+      - /bin/sh
+      - /app/scripts/entrypoint.sh
+
+    depends_on:
+      - postgres
+    networks:
+      - backend-net
+
+  postgres:
+    container_name: postgres
+    image: postgis/postgis:16-3.5
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: books-store
+    ports:
+      - "5441:5432"
+#    volumes:
+#      - ./pgdata:/var/lib/postgresql/data
+    networks:
+      - backend-net
+
+#volumes:
+#  pgdata:
+#    driver: local
+
+networks:
+  backend-net:
+    driver: bridge
