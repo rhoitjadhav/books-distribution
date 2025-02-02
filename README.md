@@ -1,5 +1,5 @@
 ## Installation
-run
+Start all containers
 ```commandline
 docker compose up -d
 ```
@@ -8,3 +8,7 @@ docker compose up -d
 ```commandline
 ./scripts/run_migrations.sh
 ```
+
+
+### Test application
+http://localhost:8545/docs
