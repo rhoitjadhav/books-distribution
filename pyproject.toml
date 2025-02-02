@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "books-distribution"
+version = "0.1.0"
+description = ""
+authors = ["rohitpelago <rohit.jadhav@pelago.co>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
