@@ -1,11 +1,11 @@
 import enum
 import uuid
 
-from sqlalchemy import Column, Integer, String, ForeignKey, UUID, Enum
+from sqlalchemy import Column, Integer, String, ForeignKey, UUID, Enum, select
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
 
-from database import Base
+from database import Base, SessionLocal
 
 
 class CoverType(enum.Enum):
@@ -32,8 +32,45 @@ class BooksModel(Base):
     cover_type = Column(Enum(CoverType, name="cover_types"), nullable=False)
 
     # Relationships
-    author = relationship("Author", backref="books")
-    publisher = relationship("Publisher", backref="books")
+    author = relationship("AuthorsModel", backref="books")
+    publisher = relationship("PublishersModel", backref="books")
 
     def __repr__(self):
         return f"<Book {self.book_title} ({self.publication_year})>"
+
+    @staticmethod
+    def get_by_pk(pk: str) -> "BooksModel":
+        stmt = select(BooksModel).where(BooksModel.book_id == pk)
+        with SessionLocal() as session:
+            return session.scalars(stmt).first()
+
+    @staticmethod
+    def get(**kwargs) -> "BooksModel":
+        stmt = select(BooksModel).filter_by(**kwargs)
+        with SessionLocal() as session:
+            return session.scalars(stmt).first()
+
+    @staticmethod
+    def get_all(limit: int, offset: int, **kwargs) -> list["BooksModel"]:
+        stmt = (
+            select(BooksModel).filter_by(**kwargs).limit(limit).offset(offset)
+        )
+        with SessionLocal() as session:
+            return session.scalars(stmt).all()
+
+    @staticmethod
+    def create(**kwargs) -> "BooksModel":
+        book = BooksModel(**kwargs)
+        with SessionLocal() as session:
+            session.add(book)
+            session.commit()
+            return book
+
+    @staticmethod
+    def update(pk: str, **kwargs) -> "BooksModel":
+        with SessionLocal() as session:
+            book = session.get(BooksModel, pk)
+            for key, value in kwargs.items():
+                setattr(book, key, value)
+            session.commit()
+            return book
