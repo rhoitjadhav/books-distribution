@@ -1,4 +1,4 @@
 set -e
 
 # Upgrade DB
-alembic upgrade head
+docker exec -it backend alembic upgrade head
