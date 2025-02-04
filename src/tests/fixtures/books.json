@@ -1,0 +1,36 @@
+[
+    {
+        "model": "repositories.books.models.BooksModel",
+        "field": {
+            "book_id": "75e8b351-f612-4eff-8dfe-6544e73a8df4",
+            "book_title": "Book 1",
+            "author_id": "AUTH1",
+            "publisher_id": "PUB1",
+            "books_meta_data": {},
+            "media_data": {},
+            "pages": 100,
+            "publication_year": 2010,
+            "price": 10.00,
+            "subject": "Philosophy",
+            "language": "English",
+            "cover_type": "HARDBACK"
+        }
+    },
+    {
+        "model": "repositories.books.models.BooksModel",
+        "field": {
+            "book_id": "19829b35-9ff5-4cf1-8074-0940719f2823",
+            "book_title": "Book 3",
+            "author_id": "AUTH2",
+            "publisher_id": "PUB2",
+            "books_meta_data": {},
+            "media_data": {},
+            "pages": 200,
+            "publication_year": 2011,
+            "price": 20.00,
+            "subject": "Spiritual",
+            "language": "English",
+            "cover_type": "HARDBACK"
+        }
+    }
+]

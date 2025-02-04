@@ -1,0 +1,26 @@
+[
+    {
+        "model": "repositories.authors.models.AuthorsModel",
+        "field": {
+            "author_id": "AUTH1",
+            "name": "Author 1",
+            "images": [
+                {
+                    "url": "https://www.example.com/image"
+                }
+            ]
+        }
+    },
+    {
+        "model": "repositories.authors.models.AuthorsModel",
+        "field": {
+            "author_id": "AUTH2",
+            "name": "Author 2",
+            "images": [
+                {
+                    "url": "https://www.example.com/image"
+                }
+            ]
+        }
+    }
+]
