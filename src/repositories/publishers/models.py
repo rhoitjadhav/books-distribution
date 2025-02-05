@@ -17,9 +17,7 @@ class PublishersModel(Base):
 
     @staticmethod
     def get_by_pk(pk: str) -> "PublishersModel":
-        stmt = select(PublishersModel).where(
-            PublishersModel.publisher_id == pk
-        )
+        stmt = select(PublishersModel).where(PublishersModel.publisher_id == pk)
         with SessionLocal() as session:
             return session.scalars(stmt).first()
 
@@ -31,12 +29,7 @@ class PublishersModel(Base):
 
     @staticmethod
     def get_all(limit: int, offset: int, **kwargs) -> list["PublishersModel"]:
-        stmt = (
-            select(PublishersModel)
-            .filter_by(**kwargs)
-            .limit(limit)
-            .offset(offset)
-        )
+        stmt = select(PublishersModel).filter_by(**kwargs).limit(limit).offset(offset)
         with SessionLocal() as session:
             return session.scalars(stmt).all()
 

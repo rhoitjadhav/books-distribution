@@ -7,9 +7,7 @@ from repositories.publishers.schemas import ListPublishers, PublishersSchema
 
 
 class PublishersService:
-    def __init__(
-        self, response: Response, publishers_repository: PublishersModel
-    ):
+    def __init__(self, response: Response, publishers_repository: PublishersModel):
         self._publishers_repository = publishers_repository
         self._response = response
 

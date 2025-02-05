@@ -1,5 +1,3 @@
-import uuid
-
 from sqlalchemy import Column, String, select
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.exc import NoResultFound
@@ -32,12 +30,7 @@ class AuthorsModel(Base):
 
     @staticmethod
     def get_all(limit: int, offset: int, **kwargs) -> list["AuthorsModel"]:
-        stmt = (
-            select(AuthorsModel)
-            .filter_by(**kwargs)
-            .limit(limit)
-            .offset(offset)
-        )
+        stmt = select(AuthorsModel).filter_by(**kwargs).limit(limit).offset(offset)
         with SessionLocal() as session:
             return session.scalars(stmt).all()
 
