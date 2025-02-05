@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, select
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.exc import NoResultFound
 

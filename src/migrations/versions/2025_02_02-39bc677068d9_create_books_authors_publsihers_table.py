@@ -23,7 +23,9 @@ def upgrade() -> None:
         "authors",
         sa.Column("author_id", sa.String(), nullable=False),
         sa.Column("name", sa.String(), nullable=False),
-        sa.Column("images", postgresql.JSONB(astext_type=sa.Text()), nullable=True),
+        sa.Column(
+            "images", postgresql.JSONB(astext_type=sa.Text()), nullable=True
+        ),
         sa.PrimaryKeyConstraint("author_id"),
     )
     op.create_table(
