@@ -19,9 +19,7 @@ class BooksModel(Base):
     book_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     book_title = Column(String(255), nullable=False)
     author_id = Column(String, ForeignKey("authors.author_id"), nullable=False)
-    publisher_id = Column(
-        String, ForeignKey("publishers.publisher_id"), nullable=False
-    )
+    publisher_id = Column(String, ForeignKey("publishers.publisher_id"), nullable=False)
     books_meta_data = Column(JSONB, nullable=True)
     media_data = Column(JSONB, nullable=True)
     pages = Column(Integer, nullable=False)
@@ -52,9 +50,7 @@ class BooksModel(Base):
 
     @staticmethod
     def get_all(limit: int, offset: int, **kwargs) -> list["BooksModel"]:
-        stmt = (
-            select(BooksModel).filter_by(**kwargs).limit(limit).offset(offset)
-        )
+        stmt = select(BooksModel).filter_by(**kwargs).limit(limit).offset(offset)
         with SessionLocal() as session:
             return session.scalars(stmt).all()
 

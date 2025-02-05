@@ -5,6 +5,7 @@ Revises:
 Create Date: 2025-02-02 09:03:05.239120
 
 """
+
 from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
@@ -22,9 +23,7 @@ def upgrade() -> None:
         "authors",
         sa.Column("author_id", sa.String(), nullable=False),
         sa.Column("name", sa.String(), nullable=False),
-        sa.Column(
-            "images", postgresql.JSONB(astext_type=sa.Text()), nullable=True
-        ),
+        sa.Column("images", postgresql.JSONB(astext_type=sa.Text()), nullable=True),
         sa.PrimaryKeyConstraint("author_id"),
     )
     op.create_table(
