@@ -3,8 +3,10 @@ import uuid
 
 from sqlalchemy import Column, Integer, String, ForeignKey, UUID, Enum, select
 from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import relationship
 
+from common.helper import to_dict
 from database import Base, SessionLocal
 
 
@@ -55,18 +57,20 @@ class BooksModel(Base):
             return session.scalars(stmt).all()
 
     @staticmethod
-    def create(**kwargs) -> "BooksModel":
+    def create(**kwargs) -> dict:
         book = BooksModel(**kwargs)
         with SessionLocal() as session:
             session.add(book)
             session.commit()
-            return book
+            return to_dict(book)
 
     @staticmethod
     def update(pk: str, **kwargs) -> "BooksModel":
         with SessionLocal() as session:
             book = session.get(BooksModel, pk)
+            if not book:
+                raise NoResultFound(f"Book not found for id: {pk}")
             for key, value in kwargs.items():
                 setattr(book, key, value)
             session.commit()
-            return book
+            return to_dict(book)

@@ -1,9 +1,14 @@
 # Packages
 import uvicorn
 from fastapi import FastAPI
+
 from apis import apis
+from common.exceptions import add_exception_handlers
 
 app = FastAPI()
+
+# Add exception handlers
+add_exception_handlers(app)
 
 for api in apis:
     app.include_router(api)
