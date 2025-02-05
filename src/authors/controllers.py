@@ -23,9 +23,5 @@ def create_author(response: Response, author: AuthorsUpdateSchema):
 
 
 @router.put("/{author_id}")
-def update_author(
-    author_id: str, response: Response, author: AuthorsUpdateSchema
-):
-    return AuthorsService(response, AuthorsModel).update_author(
-        author_id, author
-    )
+def update_author(author_id: str, response: Response, author: AuthorsUpdateSchema):
+    return AuthorsService(response, AuthorsModel).update_author(author_id, author)
