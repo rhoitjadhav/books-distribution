@@ -37,7 +37,6 @@ class AuthorsModel(Base):
     @staticmethod
     def create(**kwargs) -> dict:
         author = AuthorsModel(**kwargs)
-        author.author_id = get_random_str()
         with SessionLocal() as session:
             session.add(author)
             session.commit()
