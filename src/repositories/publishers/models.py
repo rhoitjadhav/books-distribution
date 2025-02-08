@@ -8,7 +8,7 @@ from database import Base, SessionLocal
 class PublishersModel(Base):
     __tablename__ = "publishers"
 
-    publisher_id = Column(String, primary_key=True)
+    publisher_id = Column(String, primary_key=True, default=get_random_str)
     name = Column(String, nullable=False)
     address = Column(String, nullable=False)
 
@@ -36,7 +36,6 @@ class PublishersModel(Base):
     @staticmethod
     def create(**kwargs) -> dict:
         publisher = PublishersModel(**kwargs)
-        publisher.publisher_id = get_random_str()
         with SessionLocal() as session:
             session.add(publisher)
             session.commit()

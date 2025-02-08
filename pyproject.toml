@@ -4,6 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["rohitpelago <rohit.jadhav@pelago.co>"]
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -16,6 +17,8 @@ psycopg2 = "^2.9.10"
 psycopg2-binary = "^2.9.10"
 langcodes = "^3.5.0"
 pre-commit = "^4.1.0"
+python-multipart = "^0.0.20"
+ruff = "0.9.4"
 
 
 [build-system]
