@@ -9,7 +9,7 @@ from database import Base, SessionLocal
 class AuthorsModel(Base):
     __tablename__ = "authors"
 
-    author_id = Column(String, primary_key=True)
+    author_id = Column(String, primary_key=True, default=get_random_str)
     name = Column(String, nullable=False)
     images = Column(JSONB, nullable=True)
 
