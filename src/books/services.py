@@ -27,7 +27,7 @@ class BooksService:
         if not book:
             self._response.status_code = 404
             return ErrorSchema(message="Book not found")
-        return BooksSchema.model_validate(book)
+        return BooksSchema.model_validate(to_dict(book))
 
     def create_book(self, book: BooksSchema):
         return self._books_repository.create(**book.model_dump())
