@@ -9,6 +9,11 @@ docker compose up -d
 ./scripts/run_migrations.sh
 ```
 
+### Populate DB
+```commandline
+./scripts/populate_db.sh
+```
+
 
 ### Test application
 http://localhost:8545/docs

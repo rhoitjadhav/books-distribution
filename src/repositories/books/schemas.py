@@ -1,4 +1,5 @@
 from typing import Optional
+from uuid import UUID
 
 from pydantic import BaseModel
 
@@ -6,6 +7,7 @@ from repositories.books.models import CoverType
 
 
 class BooksSchema(BaseModel):
+    book_id: Optional[UUID]
     book_title: str
     author_id: str
     publisher_id: str
