@@ -21,7 +21,7 @@ app.add_middleware(
 add_exception_handlers(app)
 
 for api in apis:
-    app.include_router(api)
+    app.include_router(api, prefix="/api")
 
 
 if __name__ == "__main__":

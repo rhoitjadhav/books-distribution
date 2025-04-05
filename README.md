@@ -4,9 +4,10 @@ Install docker and start all containers
 docker compose up -d
 ```
 
-### Run Migrations
+### Run Migrations & Populate DB
 ```commandline
 ./scripts/run_migrations.sh
+./scripts/populate_db.sh
 ```
 
 ### Populate DB
@@ -30,4 +31,9 @@ pip install virtualenv
 virtualenv venv
 source venv/bin/activate
 pip install -r requirements.txt
+```
+
+Install pre-commit hook
+```commandline
+pre-commit install
 ```
