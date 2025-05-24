@@ -31,6 +31,17 @@ def add_to_cart(
     )
 
 
+@router.put("/{cart_item_id}")
+def update_cart_item(
+    cart_item_id: str,
+    response: Response,
+    cart_item: CartItemSchema,
+):
+    return CartsService(
+        response, CartsModel, CartItemsModel, BooksModel
+    ).update_cart_item(cart_item_id, cart_item)
+
+
 @router.delete("/{cart_item_id}")
 def remove_cart_item(cart_item_id: str, response: Response):
     return CartsService(

@@ -60,8 +60,12 @@ class CartsService:
 
         return self._cart_items_repository.create(
             cart_id=cart.id,
-            price=book.price,
             **cart_item.model_dump(),
+        )
+
+    def update_cart_item(self, cart_item_id: str, cart_item: CartItemSchema):
+        return self._cart_items_repository.update(
+            cart_item_id, **cart_item.model_dump()
         )
 
     def remove_cart_item(self, cart_item_id: str):

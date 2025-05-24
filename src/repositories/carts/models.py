@@ -3,13 +3,13 @@ import uuid
 from sqlalchemy import (
     ForeignKey,
     Integer,
-    Float,
     DateTime,
     func,
     Column,
     UUID,
     select,
 )
+from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import relationship, selectinload, joinedload
 
 from common.helper import to_dict
@@ -61,7 +61,6 @@ class CartItemsModel(Base):
     )
     book_id = Column(UUID(as_uuid=True), ForeignKey("books.book_id"))
     quantity = Column(Integer, nullable=False, default=1)
-    price = Column(Float, nullable=False)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
@@ -86,6 +85,17 @@ class CartItemsModel(Base):
         cart_item = CartItemsModel(**kwargs)
         with SessionLocal() as session:
             session.add(cart_item)
+            session.commit()
+            return to_dict(cart_item)
+
+    @staticmethod
+    def update(pk: str, **kwargs) -> "CartItemsModel":
+        with SessionLocal() as session:
+            cart_item = session.get(CartItemsModel, pk)
+            if not cart_item:
+                raise NoResultFound(f"Cart item not found for id: {pk}")
+            for key, value in kwargs.items():
+                setattr(cart_item, key, value)
             session.commit()
             return to_dict(cart_item)
 

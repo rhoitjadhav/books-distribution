@@ -37,7 +37,6 @@ def upgrade() -> None:
         sa.Column("cart_id", sa.UUID(), nullable=False),
         sa.Column("book_id", sa.UUID(), nullable=True),
         sa.Column("quantity", sa.Integer(), nullable=False),
-        sa.Column("price", sa.Float(), nullable=False),
         sa.Column(
             "created_at", sa.DateTime(), server_default=sa.text("now()"), nullable=True
         ),

@@ -24,7 +24,6 @@ class CartItemsDetailSchema(BaseModel):
     cart_id: UUID
     book: BooksSchema
     quantity: int
-    price: float
 
 
 class CartItemDeleteSchema(BaseModel):
