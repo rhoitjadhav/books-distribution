@@ -23,3 +23,9 @@ def to_dict(model):
 def get_random_str(length: int = 6):
     chars = string.ascii_uppercase + string.digits
     return "".join(random.choice(chars) for _ in range(length))
+
+
+def get_limit_offset(page: int, page_size: int):
+    limit = page_size * page
+    offset = (page - 1) * page_size
+    return limit, offset
