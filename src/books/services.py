@@ -1,6 +1,6 @@
 from fastapi import Response
 
-from common.helper import to_dict
+from common.helper import to_dict, get_limit_offset
 from common.schemas import ErrorSchema
 from repositories.books.models import BooksModel
 from repositories.books.schemas import (
@@ -16,8 +16,7 @@ class BooksService:
         self._response = response
 
     def list_books(self, page: int, page_size: int):
-        limit = page_size * page
-        offset = (page - 1) * page_size
+        limit, offset = get_limit_offset(page, page_size)
         books = self._books_repository.get_all(limit, offset)
         books = [BooksSchema.model_validate(to_dict(book)) for book in books]
         return ListBooks(books=books)
