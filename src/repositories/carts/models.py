@@ -19,7 +19,7 @@ from database import Base, SessionLocal
 class CartsModel(Base):
     __tablename__ = "carts"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    cart_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
@@ -55,9 +55,12 @@ class CartsModel(Base):
 class CartItemsModel(Base):
     __tablename__ = "cart_items"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    cart_item_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     cart_id = Column(
-        UUID(as_uuid=True), ForeignKey("carts.id"), nullable=False, index=True
+        UUID(as_uuid=True),
+        ForeignKey("carts.cart_id"),
+        nullable=False,
+        index=True,
     )
     book_id = Column(UUID(as_uuid=True), ForeignKey("books.book_id"))
     quantity = Column(Integer, nullable=False, default=1)
@@ -75,8 +78,14 @@ class CartItemsModel(Base):
             return session.scalars(stmt).first()
 
     @staticmethod
-    def get_all(limit: int, offset: int, **kwargs) -> list["CartItemsModel"]:
-        stmt = select(CartItemsModel).filter_by(**kwargs).limit(limit).offset(offset)
+    def get_all(limit: int, offset: int, *args, **kwargs) -> list["CartItemsModel"]:
+        stmt = (
+            select(CartItemsModel)
+            .filter(*args)
+            .filter_by(**kwargs)
+            .limit(limit)
+            .offset(offset)
+        )
         with SessionLocal() as session:
             return session.scalars(stmt).all()
 
@@ -113,13 +122,16 @@ class CartItemsModel(Base):
 
     @staticmethod
     def get_cart_items(
-        user_id: str, limit: int = 10, offset: int = 0
+        user_id: str, limit: int = 10, offset: int = 0, *filters
     ) -> list["CartItemsModel"]:
         stmt = (
             select(CartItemsModel)
             .options(joinedload(CartItemsModel.book))
-            .join(CartsModel, CartsModel.id == CartItemsModel.cart_id)
-            .filter(CartsModel.user_id == user_id)
+            .join(CartsModel, CartsModel.cart_id == CartItemsModel.cart_id)
+            .filter(
+                CartsModel.user_id == user_id,
+                *filters,
+            )
             .limit(limit)
             .offset(offset)
         )

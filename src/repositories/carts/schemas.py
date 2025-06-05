@@ -8,7 +8,7 @@ from repositories.books.schemas import BooksSchema
 
 
 class CartSchema(BaseModel):
-    id: Optional[UUID]
+    cart_id: Optional[UUID]
     user_id: UUID
     created_at: datetime
     updated_at: datetime
@@ -20,7 +20,7 @@ class CartItemSchema(BaseModel):
 
 
 class CartItemsDetailSchema(BaseModel):
-    id: Optional[UUID]
+    cart_item_id: Optional[UUID]
     cart_id: UUID
     book: BooksSchema
     quantity: int
