@@ -53,13 +53,13 @@ class CartsService:
 
         # Check if book is already in the cart
         existing_item = self._cart_items_repository.get(
-            cart_id=cart.id, book_id=cart_item.book_id
+            cart_id=cart.cart_id, book_id=cart_item.book_id
         )
         if existing_item:
             return ErrorSchema(message="Book already in cart")
 
         return self._cart_items_repository.create(
-            cart_id=cart.id,
+            cart_id=cart.cart_id,
             **cart_item.model_dump(),
         )
 
