@@ -4,6 +4,7 @@ from sqlalchemy.exc import NoResultFound
 from common.schemas import ErrorSchema
 from repositories.carts.models import CartItemsModel
 from repositories.orders.models import OrdersModel, OrderItemsModel
+from repositories.orders.schemas import OrderStatus
 
 
 class OrdersService:
@@ -44,6 +45,7 @@ class OrdersService:
             order_id=self._orders_repository.generate_order_id(),
             user_id=user_id,
             total_amount=total,
+            status=OrderStatus.CONFIRMED,
         )
         return self._order_items_repository.create_order_items(order_kwargs, cart_items)
 
