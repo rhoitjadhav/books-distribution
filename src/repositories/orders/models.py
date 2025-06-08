@@ -20,6 +20,7 @@ from sqlalchemy.orm import relationship
 from common.helper import to_dict
 from database import Base, SessionLocal
 from repositories.carts.models import CartItemsModel
+from repositories.orders.schemas import OrderStatus
 
 
 class OrdersModel(Base):
@@ -28,9 +29,11 @@ class OrdersModel(Base):
     order_id = Column(String, primary_key=True)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
     total_amount = Column(Float, nullable=False)
-    status = Column(String(50), nullable=False, default="PENDING")
+    status = Column(String(50), nullable=False, default=OrderStatus.PENDING)
     created_at = Column(DateTime, server_default=func.now())
-    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+    updated_at = Column(
+        DateTime, server_default=func.now(), onupdate=func.now()
+    )
 
     # Relationships
     items = relationship(
@@ -41,7 +44,7 @@ class OrdersModel(Base):
     def generate_order_id():
         """
         Generate order ID string with format:
-        - BO, stands for Pelago Order
+        - BO, stands for Books Order
         - YY, year created
         - mm, month created
         - 6 random uppercase alphanumeric chars
@@ -79,12 +82,16 @@ class OrderItemsModel(Base):
         primary_key=True,
         default=uuid.uuid4,
     )
-    order_id = Column(String, ForeignKey("orders.order_id"), nullable=False, index=True)
+    order_id = Column(
+        String, ForeignKey("orders.order_id"), nullable=False, index=True
+    )
     book_id = Column(UUID(as_uuid=True), nullable=False, index=True)
     quantity = Column(Integer, nullable=False)
     price = Column(Float, nullable=False)
     created_at = Column(DateTime, server_default=func.now())
-    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+    updated_at = Column(
+        DateTime, server_default=func.now(), onupdate=func.now()
+    )
 
     # Relationships
     order = relationship("OrdersModel", back_populates="items")
