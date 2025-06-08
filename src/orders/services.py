@@ -47,7 +47,9 @@ class OrdersService:
             total_amount=total,
             status=OrderStatus.CONFIRMED,
         )
-        return self._order_items_repository.create_order_items(order_kwargs, cart_items)
+        return self._order_items_repository.create_order_items(
+            order_kwargs, cart_items
+        )
 
     def get_order(self, order_id):
         # Logic to retrieve an order
