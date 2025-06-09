@@ -52,9 +52,14 @@ class OrdersService:
             total_amount=total,
             status=OrderStatus.CONFIRMED,
         )
-        return self._order_items_repository.create_order_items(
+        order, _ = self._order_items_repository.create_order_items(
             order_kwargs, cart_items
         )
+
+        self._cart_items_repository.delete(
+            CartItemsModel.cart_item_id.in_(cart_item_ids)
+        )
+        return order
 
     def list_orders(self, user_id: str, page: int, page_size: int):
         limit, offset = get_limit_offset(page, page_size)
