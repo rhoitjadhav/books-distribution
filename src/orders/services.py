@@ -1,10 +1,15 @@
 from fastapi import Response
 from sqlalchemy.exc import NoResultFound
 
+from common.helper import get_limit_offset, to_dict
 from common.schemas import ErrorSchema
 from repositories.carts.models import CartItemsModel
 from repositories.orders.models import OrdersModel, OrderItemsModel
-from repositories.orders.schemas import OrderStatus
+from repositories.orders.schemas import (
+    OrderStatus,
+    OrdersSchema,
+    OrderItemsSchema,
+)
 
 
 class OrdersService:
@@ -51,14 +56,18 @@ class OrdersService:
             order_kwargs, cart_items
         )
 
-    def get_order(self, order_id):
-        # Logic to retrieve an order
-        return self._orders_repository.get(order_id)
+    def list_orders(self, user_id: str, page: int, page_size: int):
+        limit, offset = get_limit_offset(page, page_size)
+        orders = self._orders_repository.get_all(
+            limit, offset, user_id=user_id
+        )
+        return [
+            OrdersSchema.model_validate(to_dict(order)) for order in orders
+        ]
 
-    def update_order(self, order_id, order_data):
-        # Logic to update an order
-        return self._orders_repository.update(order_id, order_data)
-
-    def delete_order(self, order_id):
-        # Logic to delete an order
-        return self._orders_repository.delete(order_id)
+    def get_order(self, order_id: str):
+        order_items = self._order_items_repository.get_order_items(order_id)
+        return [
+            OrderItemsSchema.model_validate(to_dict(item))
+            for item in order_items
+        ]
