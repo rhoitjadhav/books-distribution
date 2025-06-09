@@ -14,16 +14,18 @@ from sqlalchemy import (
     func,
     Column,
     UUID,
+    select,
 )
 from sqlalchemy.orm import relationship
 
 from common.helper import to_dict
 from database import Base, SessionLocal
+from repositories.base import BaseModel
 from repositories.carts.models import CartItemsModel
 from repositories.orders.schemas import OrderStatus
 
 
-class OrdersModel(Base):
+class OrdersModel(BaseModel):
     __tablename__ = "orders"
 
     order_id = Column(String, primary_key=True)
@@ -124,3 +126,11 @@ class OrderItemsModel(Base):
             session.add_all(order_items)
             session.commit()
             return to_dict(order), [to_dict(item) for item in order_items]
+
+    @staticmethod
+    def get_order_items(order_id: str, *filters):
+        stmt = select(OrderItemsModel).filter(
+            OrderItemsModel.order_id == order_id, *filters
+        )
+        with SessionLocal() as session:
+            return session.scalars(stmt).all()
