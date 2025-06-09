@@ -20,6 +20,7 @@ pre-commit = "^4.1.0"
 python-multipart = "^0.0.20"
 ruff = "0.9.4"
 watchdog = "^6.0.0"
+pyhumps = "^3.8.0"
 
 
 [build-system]
