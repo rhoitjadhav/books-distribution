@@ -8,6 +8,7 @@ from sqlalchemy import (
     Column,
     UUID,
     select,
+    delete,
 )
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import relationship, selectinload, joinedload
@@ -22,7 +23,9 @@ class CartsModel(Base):
     cart_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
     created_at = Column(DateTime, server_default=func.now())
-    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+    updated_at = Column(
+        DateTime, server_default=func.now(), onupdate=func.now()
+    )
 
     # Relationships
     items = relationship(
@@ -55,7 +58,9 @@ class CartsModel(Base):
 class CartItemsModel(Base):
     __tablename__ = "cart_items"
 
-    cart_item_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    cart_item_id = Column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
     cart_id = Column(
         UUID(as_uuid=True),
         ForeignKey("carts.cart_id"),
@@ -65,7 +70,9 @@ class CartItemsModel(Base):
     book_id = Column(UUID(as_uuid=True), ForeignKey("books.book_id"))
     quantity = Column(Integer, nullable=False, default=1)
     created_at = Column(DateTime, server_default=func.now())
-    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+    updated_at = Column(
+        DateTime, server_default=func.now(), onupdate=func.now()
+    )
 
     # Relationships
     cart = relationship("CartsModel", back_populates="items")
@@ -78,7 +85,9 @@ class CartItemsModel(Base):
             return session.scalars(stmt).first()
 
     @staticmethod
-    def get_all(limit: int, offset: int, *args, **kwargs) -> list["CartItemsModel"]:
+    def get_all(
+        limit: int, offset: int, *args, **kwargs
+    ) -> list["CartItemsModel"]:
         stmt = (
             select(CartItemsModel)
             .filter(*args)
@@ -109,16 +118,12 @@ class CartItemsModel(Base):
             return to_dict(cart_item)
 
     @staticmethod
-    def delete(**kwargs):
+    def delete(*filters):
         with SessionLocal() as session:
-            cart_item = session.scalars(
-                select(CartItemsModel).filter_by(**kwargs)
-            ).first()
-            if not cart_item:
-                raise ValueError("Cart item not found")
-            session.delete(cart_item)
+            stmt = delete(CartItemsModel).where(*filters)
+            result = session.execute(stmt)
             session.commit()
-            return to_dict(cart_item)
+            return result.rowcount
 
     @staticmethod
     def get_cart_items(
