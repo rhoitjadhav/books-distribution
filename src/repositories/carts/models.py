@@ -8,16 +8,16 @@ from sqlalchemy import (
     Column,
     UUID,
     select,
-    delete,
 )
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import relationship, selectinload, joinedload
 
 from common.helper import to_dict
-from database import Base, SessionLocal
+from database import SessionLocal
+from repositories.base import BaseModel
 
 
-class CartsModel(Base):
+class CartsModel(BaseModel):
     __tablename__ = "carts"
 
     cart_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -46,16 +46,8 @@ class CartsModel(Base):
         with SessionLocal() as session:
             return session.scalars(stmt).first()
 
-    @staticmethod
-    def create(**kwargs) -> "CartsModel":
-        cart = CartsModel(**kwargs)
-        with SessionLocal() as session:
-            session.add(cart)
-            session.commit()
-            return to_dict(cart)
 
-
-class CartItemsModel(Base):
+class CartItemsModel(BaseModel):
     __tablename__ = "cart_items"
 
     cart_item_id = Column(
@@ -78,16 +70,10 @@ class CartItemsModel(Base):
     cart = relationship("CartsModel", back_populates="items")
     book = relationship("BooksModel")
 
-    @staticmethod
-    def get(**kwargs) -> "CartItemsModel":
-        stmt = select(CartItemsModel).filter_by(**kwargs)
-        with SessionLocal() as session:
-            return session.scalars(stmt).first()
-
-    @staticmethod
+    @classmethod
     def get_all(
-        limit: int, offset: int, *args, **kwargs
-    ) -> list["CartItemsModel"]:
+        cls, limit: int = None, offset: int = None, *args, **kwargs
+    ) -> list:
         stmt = (
             select(CartItemsModel)
             .filter(*args)
@@ -99,14 +85,6 @@ class CartItemsModel(Base):
             return session.scalars(stmt).all()
 
     @staticmethod
-    def create(**kwargs) -> "CartItemsModel":
-        cart_item = CartItemsModel(**kwargs)
-        with SessionLocal() as session:
-            session.add(cart_item)
-            session.commit()
-            return to_dict(cart_item)
-
-    @staticmethod
     def update(pk: str, **kwargs) -> "CartItemsModel":
         with SessionLocal() as session:
             cart_item = session.get(CartItemsModel, pk)
@@ -116,14 +94,6 @@ class CartItemsModel(Base):
                 setattr(cart_item, key, value)
             session.commit()
             return to_dict(cart_item)
-
-    @staticmethod
-    def delete(*filters):
-        with SessionLocal() as session:
-            stmt = delete(CartItemsModel).where(*filters)
-            result = session.execute(stmt)
-            session.commit()
-            return result.rowcount
 
     @staticmethod
     def get_cart_items(

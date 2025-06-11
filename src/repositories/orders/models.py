@@ -19,7 +19,7 @@ from sqlalchemy import (
 from sqlalchemy.orm import relationship
 
 from common.helper import to_dict
-from database import Base, SessionLocal
+from database import SessionLocal
 from repositories.base import BaseModel
 from repositories.carts.models import CartItemsModel
 from repositories.orders.schemas import OrderStatus
@@ -76,7 +76,7 @@ class OrdersModel(BaseModel):
             return to_dict(order)
 
 
-class OrderItemsModel(Base):
+class OrderItemsModel(BaseModel):
     __tablename__ = "order_items"
 
     order_item_id = Column(
@@ -97,14 +97,6 @@ class OrderItemsModel(Base):
 
     # Relationships
     order = relationship("OrdersModel", back_populates="items")
-
-    @staticmethod
-    def create(**kwargs) -> "OrderItemsModel":
-        order_item = OrderItemsModel(**kwargs)
-        with SessionLocal() as session:
-            session.add(order_item)
-            session.commit()
-            return to_dict(order_item)
 
     @staticmethod
     def create_order_items(
