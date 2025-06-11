@@ -1,3 +1,4 @@
+import os
 import warnings
 from logging.config import fileConfig
 
@@ -33,6 +34,11 @@ target_metadata = Base.metadata
 warnings.filterwarnings(
     "ignore", category=SAWarning, message="Did not recognize type 'geometry'"
 )
+
+url = os.getenv("SQLALCHEMY_DATABASE_URL") or context.config.get_main_option(
+    "sqlalchemy.url"
+)
+context.config.set_main_option("sqlalchemy.url", url)
 
 
 def include_object(object, name, type_, reflected, compare_to):
