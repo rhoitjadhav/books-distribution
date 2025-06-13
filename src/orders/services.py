@@ -1,6 +1,8 @@
+# Packages
 from fastapi import Response
-from sqlalchemy.exc import NoResultFound
 
+# Modules
+from common.exceptions import NotFoundException
 from common.helper import get_limit_offset, to_dict
 from common.schemas import ErrorSchema
 from repositories.carts.models import CartItemsModel
@@ -40,7 +42,7 @@ class OrdersService:
             user_id, limit, offset, *filters
         )
         if not cart_items:
-            raise NoResultFound(
+            raise NotFoundException(
                 "Cart items not found or empty. "
                 "Please add items to your cart before checking out."
             )
@@ -70,9 +72,13 @@ class OrdersService:
             OrdersSchema.model_validate(to_dict(order)) for order in orders
         ]
 
-    def get_order(self, order_id: str):
-        order_items = self._order_items_repository.get_order_items(order_id)
+    def get_order(self, order_id: str, user_id: str):
+        order = self._orders_repository.get_order_with_items(order_id, user_id)
+        if not order:
+            raise NotFoundException(
+                "Order not found or does not belong to the user"
+            )
         return [
             OrderItemsSchema.model_validate(to_dict(item))
-            for item in order_items
+            for item in order.items
         ]

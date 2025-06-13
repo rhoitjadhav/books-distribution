@@ -4,9 +4,9 @@ import uuid
 
 from sqlalchemy import Column, Integer, String, ForeignKey, UUID, Enum, select
 from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import relationship
 
+from common.exceptions import NotFoundException
 from common.helper import to_dict
 from database import SessionLocal
 from repositories.base import BaseModel
@@ -65,7 +65,7 @@ class BooksModel(BaseModel):
         with SessionLocal() as session:
             book = session.get(BooksModel, pk)
             if not book:
-                raise NoResultFound(f"Book not found for id: {pk}")
+                raise NotFoundException(f"Book not found for id: {pk}")
             for key, value in kwargs.items():
                 setattr(book, key, value)
             session.commit()

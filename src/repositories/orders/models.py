@@ -16,7 +16,7 @@ from sqlalchemy import (
     UUID,
     select,
 )
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, joinedload
 
 from common.helper import to_dict
 from database import SessionLocal
@@ -63,6 +63,20 @@ class OrdersModel(BaseModel):
         ALPHANUMERIC = string.ascii_uppercase + string.digits
         random_chars = "".join(random.choices(ALPHANUMERIC, k=6))
         return f"BO{year}{month}{random_chars}"
+
+    @staticmethod
+    def get_order_with_items(order_id: str, user_id: str, **kwargs):
+        stmt = (
+            select(OrdersModel)
+            .where(
+                OrdersModel.order_id == order_id,
+                OrdersModel.user_id == user_id,
+            )
+            .filter_by(**kwargs)
+            .options(joinedload(OrdersModel.items))
+        )
+        with SessionLocal() as session:
+            return session.scalars(stmt).first()
 
     @staticmethod
     def create(session=True, **kwargs) -> dict | OrdersModel:
@@ -118,11 +132,3 @@ class OrderItemsModel(BaseModel):
             session.add_all(order_items)
             session.commit()
             return to_dict(order), [to_dict(item) for item in order_items]
-
-    @staticmethod
-    def get_order_items(order_id: str, *filters):
-        stmt = select(OrderItemsModel).filter(
-            OrderItemsModel.order_id == order_id, *filters
-        )
-        with SessionLocal() as session:
-            return session.scalars(stmt).all()

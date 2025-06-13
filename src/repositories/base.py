@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 import humps
 from sqlalchemy import select, delete
 from pydantic import BaseModel as PydanticBaseModel
@@ -12,7 +14,7 @@ class BaseModel(Base):
     __abstract__ = True
 
     @classmethod
-    def get(cls, **kwargs) -> object:
+    def get(cls, **kwargs) -> Any:
         """
         Retrieve a single record from the database based on the
         provided keyword arguments.

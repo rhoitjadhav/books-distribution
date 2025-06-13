@@ -9,9 +9,9 @@ from sqlalchemy import (
     UUID,
     select,
 )
-from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import relationship, selectinload, joinedload
 
+from common.exceptions import NotFoundException
 from common.helper import to_dict
 from database import SessionLocal
 from repositories.base import BaseModel
@@ -89,7 +89,7 @@ class CartItemsModel(BaseModel):
         with SessionLocal() as session:
             cart_item = session.get(CartItemsModel, pk)
             if not cart_item:
-                raise NoResultFound(f"Cart item not found for id: {pk}")
+                raise NotFoundException(f"Cart item not found for id: {pk}")
             for key, value in kwargs.items():
                 setattr(cart_item, key, value)
             session.commit()
