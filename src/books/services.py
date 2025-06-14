@@ -1,5 +1,3 @@
-import uuid
-
 from fastapi import Response
 
 from common.helper import to_dict, get_limit_offset
@@ -28,7 +26,7 @@ class BooksService:
 
     def create_book(self, book: BooksSchema):
         if not book.book_id:
-            book.book_id = uuid.uuid4()
+            book.book_id = self._books_repository.generate_book_id()
         book = self._books_repository.create(**book.model_dump())
         return BooksSchema.model_validate(book)
 
