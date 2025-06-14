@@ -2,7 +2,7 @@
     {
         "model": "repositories.books.models.BooksModel",
         "field": {
-            "book_id": "75e8b351-f612-4eff-8dfe-6544e73a8df4",
+            "book_id": "b1f8b2ef",
             "book_title": "Book 1",
             "author_id": "AUTH1",
             "publisher_id": "PUB1",
@@ -19,7 +19,7 @@
     {
         "model": "repositories.books.models.BooksModel",
         "field": {
-            "book_id": "19829b35-9ff5-4cf1-8074-0940719f2823",
+            "book_id": "bji5bqsr",
             "book_title": "Book 3",
             "author_id": "AUTH2",
             "publisher_id": "PUB2",

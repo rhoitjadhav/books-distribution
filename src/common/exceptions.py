@@ -1,11 +1,18 @@
 from fastapi import FastAPI, Request, HTTPException
-from sqlalchemy.exc import NoResultFound
 from starlette.responses import JSONResponse
 
 
+class NotFoundException(Exception):
+    def __init__(self, error_msg: str = "Resource not found"):
+        self.status_code = 404
+        self.error = error_msg
+
+
 async def exception_handler(_: Request, exc: Exception):
-    if isinstance(exc, NoResultFound):
-        return JSONResponse(status_code=404, content={"error": str(exc)})
+    if isinstance(exc, NotFoundException):
+        return JSONResponse(
+            status_code=exc.status_code, content={"error": exc.error}
+        )
     elif isinstance(exc, HTTPException):
         return JSONResponse(
             status_code=exc.status_code, content={"error": exc.detail}

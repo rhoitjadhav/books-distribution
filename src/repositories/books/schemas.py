@@ -1,13 +1,17 @@
+import enum
 from typing import Optional
 from uuid import UUID
 
-from pydantic import BaseModel
-
-from repositories.books.models import CoverType
+from repositories.base import BaseSchema
 
 
-class BooksSchema(BaseModel):
-    book_id: Optional[UUID]
+class CoverType(enum.Enum):
+    PAPERBACK = "PAPERBACK"
+    HARDBACK = "HARDBACK"
+
+
+class BooksSchema(BaseSchema):
+    book_id: Optional[UUID] = None
     book_title: str
     author_id: str
     publisher_id: str
@@ -21,7 +25,7 @@ class BooksSchema(BaseModel):
     cover_type: CoverType
 
 
-class BooksUpdateSchema(BaseModel):
+class BooksUpdateSchema(BaseSchema):
     book_id: str
     book_title: Optional[str]
     author_id: Optional[str]
@@ -34,7 +38,3 @@ class BooksUpdateSchema(BaseModel):
     subject: Optional[str]
     language: Optional[str]
     cover_type: Optional[CoverType]
-
-
-class ListBooks(BaseModel):
-    books: list[BooksSchema]

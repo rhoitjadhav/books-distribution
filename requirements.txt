@@ -25,6 +25,8 @@ psycopg2==2.9.10
 psycopg2-binary==2.9.10
 pydantic==2.10.6
 pydantic_core==2.27.2
+pydevd-pycharm==241.14494.241
+pyhumps==3.8.0
 python-multipart==0.0.20
 PyYAML==6.0.2
 ruff==0.9.4
@@ -35,3 +37,4 @@ starlette==0.45.3
 typing_extensions==4.12.2
 uvicorn==0.34.0
 virtualenv==20.29.1
+watchdog==6.0.0
