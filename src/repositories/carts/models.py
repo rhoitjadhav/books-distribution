@@ -8,8 +8,9 @@ from sqlalchemy import (
     Column,
     UUID,
     select,
+    String,
 )
-from sqlalchemy.orm import relationship, selectinload, joinedload
+from sqlalchemy.orm import relationship, joinedload
 
 from common.exceptions import NotFoundException
 from common.helper import to_dict
@@ -32,20 +33,6 @@ class CartsModel(BaseModel):
         "CartItemsModel", back_populates="cart", cascade="all, delete-orphan"
     )
 
-    @staticmethod
-    def get(**kwargs) -> "CartsModel":
-        lazy_load = kwargs.pop("lazy_load", False)
-        stmt = (
-            select(CartsModel)
-            .filter_by(**kwargs)
-            .options(selectinload(CartsModel.items))
-            if lazy_load
-            else select(CartsModel).filter_by(**kwargs)
-        )
-
-        with SessionLocal() as session:
-            return session.scalars(stmt).first()
-
 
 class CartItemsModel(BaseModel):
     __tablename__ = "cart_items"
@@ -59,7 +46,7 @@ class CartItemsModel(BaseModel):
         nullable=False,
         index=True,
     )
-    book_id = Column(UUID(as_uuid=True), ForeignKey("books.book_id"))
+    book_id = Column(String, ForeignKey("books.book_id"))
     quantity = Column(Integer, nullable=False, default=1)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(
@@ -103,7 +90,7 @@ class CartItemsModel(BaseModel):
             select(CartItemsModel)
             .options(joinedload(CartItemsModel.book))
             .join(CartsModel, CartsModel.cart_id == CartItemsModel.cart_id)
-            .filter(
+            .where(
                 CartsModel.user_id == user_id,
                 *filters,
             )

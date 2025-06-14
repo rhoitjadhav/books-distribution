@@ -1,8 +1,7 @@
 import random
 import string
-import uuid
 
-from sqlalchemy import Column, Integer, String, ForeignKey, UUID, Enum, select
+from sqlalchemy import Column, Integer, String, ForeignKey, Enum, select
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
 
@@ -16,7 +15,7 @@ from repositories.books.schemas import CoverType
 class BooksModel(BaseModel):
     __tablename__ = "books"
 
-    book_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    book_id = Column(String, primary_key=True)
     book_title = Column(String(255), nullable=False)
     author_id = Column(String, ForeignKey("authors.author_id"), nullable=False)
     publisher_id = Column(
