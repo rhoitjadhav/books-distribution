@@ -5,6 +5,7 @@ import string
 import uuid
 from datetime import datetime
 
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy import (
     ForeignKey,
     Integer,
@@ -16,6 +17,7 @@ from sqlalchemy import (
     UUID,
     select,
 )
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship, joinedload
 
 from common.helper import to_dict
@@ -101,7 +103,8 @@ class OrderItemsModel(BaseModel):
     order_id = Column(
         String, ForeignKey("orders.order_id"), nullable=False, index=True
     )
-    book_id = Column(UUID(as_uuid=True), nullable=False, index=True)
+    book_id = Column(String, nullable=False, index=True)
+    book_meta_data = Column(JSONB, nullable=True, default=dict)
     quantity = Column(Integer, nullable=False)
     price = Column(Float, nullable=False)
     created_at = Column(DateTime, server_default=func.now())
@@ -121,6 +124,7 @@ class OrderItemsModel(BaseModel):
             OrderItemsModel(
                 order_id=order.order_id,
                 book_id=item.book_id,
+                book_meta_data=jsonable_encoder(item.book),
                 quantity=item.quantity,
                 price=item.book.price,
             )

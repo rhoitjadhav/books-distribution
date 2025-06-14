@@ -23,6 +23,8 @@ class OrdersSchema(BaseSchema):
 class OrderItemsSchema(BaseSchema):
     order_item_id: UUID
     order_id: str
+    book_id: str
+    book_meta_data: dict
     quantity: int
     price: float
     created_at: datetime = None
