@@ -1,6 +1,5 @@
 import enum
 from typing import Optional
-from uuid import UUID
 
 from repositories.base import BaseSchema
 
@@ -11,7 +10,7 @@ class CoverType(enum.Enum):
 
 
 class BooksSchema(BaseSchema):
-    book_id: Optional[UUID] = None
+    book_id: Optional[str] = None
     book_title: str
     author_id: str
     publisher_id: str
