@@ -26,6 +26,6 @@ class OrderItemsSchema(BaseSchema):
     book_id: str
     book_meta_data: dict
     quantity: int
-    price: float
+    total_amount: float
     created_at: datetime = None
     updated_at: datetime = None
