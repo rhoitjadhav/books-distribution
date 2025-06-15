@@ -28,18 +28,36 @@ class OrdersService:
         self._cart_items_repository = cart_items_repository
         self._response = response
 
+    def list_orders(self, user_id: str, page: int, page_size: int):
+        limit, offset = get_limit_offset(page, page_size)
+        orders = self._orders_repository.get_all(
+            limit, offset, user_id=user_id
+        )
+        return [
+            OrdersSchema.model_validate(to_dict(order)) for order in orders
+        ]
+
+    def get_order(self, order_id: str, user_id: str):
+        order = self._orders_repository.get_order_with_items(order_id, user_id)
+        if not order:
+            raise NotFoundException(
+                "Order not found or does not belong to the user"
+            )
+        return [
+            OrderItemsSchema.model_validate(to_dict(item))
+            for item in order.items
+        ]
+
     def checkout_order(self, user_id: str, cart_item_ids: list[str]):
         if not cart_item_ids:
             self._response.status_code = 400
             return ErrorSchema(message="Cart item IDs cannot be empty")
 
-        limit = len(cart_item_ids)
-        offset = 0
         filters = [
             CartItemsModel.cart_item_id.in_(cart_item_ids),
         ]
         cart_items = self._cart_items_repository.get_cart_items(
-            user_id, limit, offset, *filters
+            user_id, len(cart_item_ids), *filters
         )
         if not cart_items:
             raise NotFoundException(
@@ -62,23 +80,3 @@ class OrdersService:
             CartItemsModel.cart_item_id.in_(cart_item_ids)
         )
         return order
-
-    def list_orders(self, user_id: str, page: int, page_size: int):
-        limit, offset = get_limit_offset(page, page_size)
-        orders = self._orders_repository.get_all(
-            limit, offset, user_id=user_id
-        )
-        return [
-            OrdersSchema.model_validate(to_dict(order)) for order in orders
-        ]
-
-    def get_order(self, order_id: str, user_id: str):
-        order = self._orders_repository.get_order_with_items(order_id, user_id)
-        if not order:
-            raise NotFoundException(
-                "Order not found or does not belong to the user"
-            )
-        return [
-            OrderItemsSchema.model_validate(to_dict(item))
-            for item in order.items
-        ]
