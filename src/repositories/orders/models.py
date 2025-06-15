@@ -32,6 +32,7 @@ class OrdersModel(BaseModel):
 
     order_id = Column(String, primary_key=True)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
+    user_meta_data = Column(JSONB, nullable=True, default=dict)
     total_amount = Column(Float, nullable=False)
     status = Column(String(50), nullable=False, default=OrderStatus.PENDING)
     created_at = Column(DateTime, server_default=func.now())
@@ -106,7 +107,7 @@ class OrderItemsModel(BaseModel):
     book_id = Column(String, nullable=False, index=True)
     book_meta_data = Column(JSONB, nullable=True, default=dict)
     quantity = Column(Integer, nullable=False)
-    price = Column(Float, nullable=False)
+    total_amount = Column(Float, nullable=False)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(
         DateTime, server_default=func.now(), onupdate=func.now()
@@ -126,7 +127,7 @@ class OrderItemsModel(BaseModel):
                 book_id=item.book_id,
                 book_meta_data=jsonable_encoder(item.book),
                 quantity=item.quantity,
-                price=item.book.price,
+                total_amount=item.book.price * item.quantity,
             )
             for item in items
         ]
