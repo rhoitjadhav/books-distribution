@@ -1,9 +1,9 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from repositories.base import BaseSchema
 
 
-class PublishersUpdateSchema(BaseModel):
+class PublishersUpdateSchema(BaseSchema):
     name: str
     address: str
 
@@ -13,5 +13,5 @@ class PublishersSchema(PublishersUpdateSchema):
     address: Optional[str]
 
 
-class ListPublishers(BaseModel):
+class ListPublishers(BaseSchema):
     publishers: list[PublishersSchema]
