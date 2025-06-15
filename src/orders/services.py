@@ -57,7 +57,7 @@ class OrdersService:
             CartItemsModel.cart_item_id.in_(cart_item_ids),
         ]
         cart_items = self._cart_items_repository.get_cart_items(
-            user_id, len(cart_item_ids), *filters
+            user_id, len(cart_item_ids), 0, *filters
         )
         if not cart_items:
             raise NotFoundException(
