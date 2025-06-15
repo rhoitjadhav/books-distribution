@@ -1,12 +1,13 @@
 from sqlalchemy import Column, String, select
 from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.exc import NoResultFound
 
+from common.exceptions import NotFoundException
 from common.helper import get_random_str, to_dict
-from database import Base, SessionLocal
+from database import SessionLocal
+from repositories.base import BaseModel
 
 
-class AuthorsModel(Base):
+class AuthorsModel(BaseModel):
     __tablename__ = "authors"
 
     author_id = Column(String, primary_key=True, default=get_random_str)
@@ -23,31 +24,11 @@ class AuthorsModel(Base):
             return session.scalars(stmt).first()
 
     @staticmethod
-    def get(**kwargs) -> "AuthorsModel":
-        stmt = select(AuthorsModel).filter_by(**kwargs)
-        with SessionLocal() as session:
-            return session.scalars(stmt).first()
-
-    @staticmethod
-    def get_all(limit: int, offset: int, **kwargs) -> list["AuthorsModel"]:
-        stmt = select(AuthorsModel).filter_by(**kwargs).limit(limit).offset(offset)
-        with SessionLocal() as session:
-            return session.scalars(stmt).all()
-
-    @staticmethod
-    def create(**kwargs) -> dict:
-        author = AuthorsModel(**kwargs)
-        with SessionLocal() as session:
-            session.add(author)
-            session.commit()
-            return to_dict(author)
-
-    @staticmethod
     def update(pk: str, **kwargs) -> dict:
         with SessionLocal() as session:
             author = session.get(AuthorsModel, pk)
             if not author:
-                raise NoResultFound(f"Author not found for id: {pk}")
+                raise NotFoundException(f"Author not found for id: {pk}")
             for key, value in kwargs.items():
                 setattr(author, key, value)
             session.commit()

@@ -37,3 +37,9 @@ Install pre-commit hook
 ```commandline
 pre-commit install
 ```
+
+## DB Migration
+### Create a new migration
+```commandline
+dce backend alembic revision --autogenerate -m "added carts and orders"
+```

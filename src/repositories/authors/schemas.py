@@ -1,9 +1,9 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from repositories.base import BaseSchema
 
 
-class AuthorsUpdateSchema(BaseModel):
+class AuthorsUpdateSchema(BaseSchema):
     name: str
 
 
@@ -12,5 +12,5 @@ class AuthorsSchema(AuthorsUpdateSchema):
     images: Optional[dict]
 
 
-class ListAuthors(BaseModel):
+class ListAuthors(BaseSchema):
     authors: list[AuthorsSchema]

@@ -1,9 +1,12 @@
+import os
+import warnings
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
+from sqlalchemy.exc import SAWarning
 
 from database import Base
 from repositories import *  # noqa
@@ -28,6 +31,74 @@ target_metadata = Base.metadata
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
+warnings.filterwarnings(
+    "ignore", category=SAWarning, message="Did not recognize type 'geometry'"
+)
+
+url = os.getenv("SQLALCHEMY_DATABASE_URL") or context.config.get_main_option(
+    "sqlalchemy.url"
+)
+context.config.set_main_option("sqlalchemy.url", url)
+
+
+def include_object(object, name, type_, reflected, compare_to):
+    exclude_tables = {
+        "spatial_ref_sys",
+        "zip_lookup_all",
+        "bg",
+        "state_lookup",
+        "faces",
+        "zip_lookup",
+        "county_lookup",
+        "edges",
+        "geocode_settings",
+        "addrfeat",
+        "featnames",
+        "pagc_gaz",
+        "layer",
+        "state",
+        "zip_lookup_base",
+        "street_type_lookup",
+        "loader_platform",
+        "zip_state_loc",
+        "pagc_rules",
+        "zcta5",
+        "countysub_lookup",
+        "topology",
+        "tabblock20",
+        "secondary_unit_lookup",
+        "loader_lookuptables",
+        "place",
+        "county",
+        "geocode_settings_default",
+        "tabblock",
+        "tract",
+        "addr",
+        "cousub",
+        "zip_state",
+        "pagc_lex",
+        "loader_variables",
+        "place_lookup",
+        "direction_lookup",
+    }
+
+    if type_ == "table" and name in exclude_tables:
+        return False
+
+    # Skip indexes related to excluded tables
+    if (
+        type_ == "index"
+        and hasattr(object, "table")
+        and object.table.name in exclude_tables
+    ):
+        return False
+
+    # Skip sequences endswith "_gid_seq" for specific tables
+    if type_ == "sequence" and name.endswith("_gid_seq"):
+        return False
+
+    return True
+
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
@@ -47,6 +118,7 @@ def run_migrations_offline() -> None:
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
+        include_object=include_object,
     )
 
     with context.begin_transaction():
@@ -67,7 +139,11 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(connection=connection, target_metadata=target_metadata)
+        context.configure(
+            connection=connection,
+            target_metadata=target_metadata,
+            include_object=include_object,
+        )
 
         with context.begin_transaction():
             context.run_migrations()
