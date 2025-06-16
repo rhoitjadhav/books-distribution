@@ -9,6 +9,7 @@ from repositories.carts.schemas import (
     CartSchema,
     CartItemsDetailSchema,
     CartItemDeleteSchema,
+    CartItemResponseSchema,
 )
 
 
@@ -58,9 +59,11 @@ class CartsService:
         if existing_item:
             return ErrorSchema(message="Book already in cart")
 
-        return self._cart_items_repository.create(
-            cart_id=cart.cart_id,
-            **cart_item.model_dump(),
+        return CartItemResponseSchema.model_validate(
+            self._cart_items_repository.create(
+                cart_id=cart.cart_id,
+                **cart_item.model_dump(),
+            )
         )
 
     def update_cart_item(self, cart_item_id: str, cart_item: CartItemSchema):
