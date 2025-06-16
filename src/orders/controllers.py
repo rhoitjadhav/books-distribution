@@ -3,7 +3,8 @@ from fastapi import APIRouter, Response
 from orders.services import OrdersService
 from repositories.carts.models import CartItemsModel
 from repositories.orders.models import OrdersModel, OrderItemsModel
-
+from repositories.users.models import UsersModel
+from repositories.users.schemas import UserInfoSchema
 
 router = APIRouter(prefix="/orders")
 
@@ -17,7 +18,7 @@ def get_order(
         "75e8b351-f612-4eff-8dfe-6544e73a8df4",
     )  # remove this default value
     return OrdersService(
-        response, OrdersModel(), OrderItemsModel, CartItemsModel
+        response, OrdersModel(), OrderItemsModel, CartItemsModel, UsersModel()
     ).get_order(order_id=order_id, user_id=user_id)
 
 
@@ -31,7 +32,7 @@ def list_orders(
         "75e8b351-f612-4eff-8dfe-6544e73a8df4",
     )  # remove this default value
     return OrdersService(
-        response, OrdersModel(), OrderItemsModel, CartItemsModel
+        response, OrdersModel(), OrderItemsModel, CartItemsModel, UsersModel()
     ).list_orders(user_id=user_id, page=page, page_size=page_size)
 
 
@@ -39,10 +40,11 @@ def list_orders(
 def checkout_order(
     response: Response,
     cart_item_ids: list[str],
+    user_info: UserInfoSchema,
 ):
     user_id: str = (
         "75e8b351-f612-4eff-8dfe-6544e73a8df4",
     )  # remove this default value
     return OrdersService(
-        response, OrdersModel, OrderItemsModel, CartItemsModel
-    ).checkout_order(user_id, cart_item_ids)
+        response, OrdersModel, OrderItemsModel, CartItemsModel, UsersModel()
+    ).checkout_order(user_info, cart_item_ids, user_id)
