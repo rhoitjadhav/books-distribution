@@ -37,6 +37,7 @@ class BaseModel(Base):
         with SessionLocal() as session:
             session.add(model_obj)
             session.commit()
+            session.refresh(model_obj)
             return to_dict(model_obj)
 
     @classmethod
