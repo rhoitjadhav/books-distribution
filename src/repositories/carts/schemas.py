@@ -20,6 +20,13 @@ class CartItemSchema(BaseSchema):
     quantity: Optional[int] = 1
 
 
+class CartItemResponseSchema(CartItemSchema):
+    cart_item_id: Optional[UUID]
+    cart_id: UUID
+    created_at: datetime
+    updated_at: datetime
+
+
 class CartItemsDetailSchema(BaseSchema):
     cart_item_id: Optional[UUID]
     cart_id: UUID
