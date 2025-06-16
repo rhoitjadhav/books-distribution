@@ -1,4 +1,6 @@
 # Packages
+from typing import Optional
+
 from fastapi import Response
 
 # Modules
@@ -12,6 +14,8 @@ from repositories.orders.schemas import (
     OrdersSchema,
     OrderItemsSchema,
 )
+from repositories.users.models import UsersModel
+from repositories.users.schemas import UserInfoSchema, UsersSchema
 
 
 class OrdersService:
@@ -21,11 +25,13 @@ class OrdersService:
         orders_repository: OrdersModel,
         order_items_repository: OrderItemsModel,
         cart_items_repository: CartItemsModel,
+        users_repository: UsersModel,
     ):
         self._orders_repository = orders_repository
         self._order_items_repository = orders_repository
         self._order_items_repository = order_items_repository
         self._cart_items_repository = cart_items_repository
+        self._users_repository = users_repository
         self._response = response
 
     def list_orders(self, user_id: str, page: int, page_size: int):
@@ -48,10 +54,21 @@ class OrdersService:
             for item in order.items
         ]
 
-    def checkout_order(self, user_id: str, cart_item_ids: list[str]):
+    def checkout_order(
+        self,
+        user_info: UserInfoSchema,
+        cart_item_ids: list[str],
+        user_id: Optional[str],
+    ):
         if not cart_item_ids:
             self._response.status_code = 400
             return ErrorSchema(message="Cart item IDs cannot be empty")
+
+        if not user_id:
+            user = UsersSchema.model_validate(
+                self._users_repository.create_or_get(**user_info.dict())
+            )
+            user_id = user.user_id
 
         filters = [
             CartItemsModel.cart_item_id.in_(cart_item_ids),
@@ -71,6 +88,7 @@ class OrdersService:
             user_id=user_id,
             total_amount=total,
             status=OrderStatus.CONFIRMED,
+            user_meta_data=user_info.dict(),
         )
         order, _ = self._order_items_repository.create_order_items(
             order_kwargs, cart_items
