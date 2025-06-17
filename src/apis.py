@@ -9,9 +9,12 @@ from users.controllers import router as users_router
 apis = [
     users_router,
     books_router,
-    authors_router,
-    publishers_router,
-    bulk_upload_router,
     carts_router,
     orders_router,
+]
+
+admin_only_apis = [
+    bulk_upload_router,
+    authors_router,
+    publishers_router,
 ]
