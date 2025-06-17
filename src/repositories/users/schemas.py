@@ -15,6 +15,22 @@ class UserInfoSchema(BaseSchema):
     # TODO: Add validation for phone number format
 
 
+class RegisterUserSchema(UserInfoSchema):
+    password: str
+
+
 class UsersSchema(UserInfoSchema):
     user_id: UUID
     is_guest: bool
+
+
+class SignInSchema(BaseSchema):
+    email: EmailStr
+    password: str
+
+
+class SignInResponseSchema(BaseSchema):
+    user_id: UUID
+    access_token: str
+    token_type: str = "bearer"
+    message: str = "Sign in successful"
