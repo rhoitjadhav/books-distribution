@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from pydantic import EmailStr
+from pydantic import EmailStr, BaseModel
 
 from repositories.base import BaseSchema
 
@@ -29,7 +29,7 @@ class SignInSchema(BaseSchema):
     password: str
 
 
-class SignInResponseSchema(BaseSchema):
+class SignInResponseSchema(BaseModel):
     user_id: UUID
     access_token: str
     token_type: str = "bearer"
