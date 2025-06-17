@@ -1,12 +1,10 @@
 # Packages
 from typing import Optional
 
-from fastapi import Response
 
 # Modules
 from common.exceptions import NotFoundException
 from common.helper import get_limit_offset, to_dict
-from common.schemas import ErrorSchema
 from repositories.carts.models import CartItemsModel
 from repositories.orders.models import OrdersModel, OrderItemsModel
 from repositories.orders.schemas import (
@@ -21,7 +19,6 @@ from repositories.users.schemas import UserInfoSchema, UsersSchema
 class OrdersService:
     def __init__(
         self,
-        response: Response,
         orders_repository: OrdersModel,
         order_items_repository: OrderItemsModel,
         cart_items_repository: CartItemsModel,
@@ -32,7 +29,6 @@ class OrdersService:
         self._order_items_repository = order_items_repository
         self._cart_items_repository = cart_items_repository
         self._users_repository = users_repository
-        self._response = response
 
     def list_orders(self, user_id: str, page: int, page_size: int = 10):
         limit, offset = get_limit_offset(page, page_size)
@@ -61,8 +57,7 @@ class OrdersService:
         user_id: Optional[str],
     ):
         if not cart_item_ids:
-            self._response.status_code = 400
-            return ErrorSchema(message="Cart item IDs cannot be empty")
+            raise NotFoundException("Cart item IDs cannot be empty")
 
         if not user_id:
             user = UsersSchema.model_validate(
