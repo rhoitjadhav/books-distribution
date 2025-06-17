@@ -35,10 +35,8 @@ def checkout_order(
     response: Response,
     cart_item_ids: list[str],
     user_info: UserInfoSchema,
+    user_id: str = Depends(get_jwt_sub),
 ):
-    user_id: str = (
-        "75e8b351-f612-4eff-8dfe-6544e73a8df4",
-    )  # remove this default value
     return OrdersService(
         response, OrdersModel, OrderItemsModel, CartItemsModel, UsersModel()
     ).checkout_order(user_info, cart_item_ids, user_id)
