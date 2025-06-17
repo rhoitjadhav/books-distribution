@@ -23,6 +23,7 @@ watchdog = "^6.0.0"
 pyhumps = "^3.8.0"
 passlib = "^1.7.4"
 pydantic = {extras = ["email"], version = "^2.11.7"}
+python-jose = {extras = ["cryptography"], version = "^3.5.0"}
 
 
 [build-system]
