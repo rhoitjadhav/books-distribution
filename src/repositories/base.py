@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Any
-
 import humps
 from sqlalchemy import select, delete
 from pydantic import BaseModel as PydanticBaseModel
@@ -14,12 +12,14 @@ class BaseModel(Base):
     __abstract__ = True
 
     @classmethod
-    def get(cls, **kwargs) -> Any:
+    def get(cls, options: tuple = (), *filters, **kwargs):
         """
-        Retrieve a single record from the database based on the
-        provided keyword arguments.
+        Retrieve a single record from the database with specific columns
+        loaded, based on the provided filters and keyword arguments.
         """
-        stmt = select(cls).filter_by(**kwargs)
+        stmt = (
+            select(cls).filter(*filters).options(*options).filter_by(**kwargs)
+        )
         with SessionLocal() as session:
             return session.scalars(stmt).first()
 
