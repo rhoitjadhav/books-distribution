@@ -1,4 +1,7 @@
+from sqlalchemy.orm import load_only
+
 from common.exceptions import ConflictException, NotFoundException
+from common.helper import to_dict
 from common.schemas import ResponseSchema
 from repositories.users.models import UsersModel
 from repositories.users.schemas import (
@@ -17,6 +20,13 @@ class UsersService:
         self._users_repository = users_repository
         self._auth_service = auth_service
 
+    def get_user_info(self, user_id: str) -> UserInfoSchema:
+        user = self._users_repository.get(user_id=user_id)
+        if not user:
+            raise NotFoundException("User not found")
+
+        return UserInfoSchema.model_validate(to_dict(user))
+
     def register_user(self, user_info: UserInfoSchema):
         if self._users_repository.is_email_exists(user_info.email):
             raise ConflictException("Email already exists")
@@ -33,8 +43,6 @@ class UsersService:
         )
 
     def sign_in(self, user_in: SignInSchema):
-        from sqlalchemy.orm import load_only
-
         user = self._users_repository.get(
             options=[load_only(UsersModel.email, UsersModel._password)],
             email=user_in.email,

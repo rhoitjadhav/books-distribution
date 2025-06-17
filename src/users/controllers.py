@@ -3,6 +3,7 @@ import os
 from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 
+from auth import get_jwt_sub
 from repositories.users.models import UsersModel
 from repositories.users.schemas import RegisterUserSchema, SignInSchema
 from users.services import UsersService
@@ -29,3 +30,8 @@ async def sign_in(form_data: OAuth2PasswordRequestForm = Depends()):
             config.JWT_ACCESS_TOKEN_EXPIRE,
         ),
     ).sign_in(user)
+
+
+@router.get("/me")
+async def get_user_info(user_id: str = Depends(get_jwt_sub)):
+    return UsersService(UsersModel()).get_user_info(user_id)
