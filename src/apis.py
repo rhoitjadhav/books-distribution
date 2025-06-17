@@ -4,8 +4,10 @@ from publishers.controllers import router as publishers_router
 from bulk_upload.controllers import router as bulk_upload_router
 from carts.controllers import router as carts_router
 from orders.controllers import router as orders_router
+from users.controllers import router as users_router
 
 apis = [
+    users_router,
     books_router,
     authors_router,
     publishers_router,
