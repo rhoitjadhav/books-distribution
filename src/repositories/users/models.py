@@ -2,6 +2,7 @@ import uuid
 
 from passlib.context import CryptContext
 from sqlalchemy import Column, String, Boolean, DateTime, func, UUID, select
+from sqlalchemy.orm import load_only
 
 from common.helper import to_dict
 from database import SessionLocal
@@ -38,6 +39,20 @@ class UsersModel(BaseModel):
 
     def verify_password(self, plain_password: str) -> bool:
         return pwd_context.verify(plain_password, self._password)
+
+    @staticmethod
+    def is_email_exists(email: str):
+        """
+        Check if the provided email already exists in the database.
+        Returns True if the email exists, otherwise False.
+        """
+        stmt = (
+            select(UsersModel)
+            .filter_by(email=email)
+            .options(load_only(UsersModel.email))
+        )
+        with SessionLocal() as session:
+            return session.scalars(stmt).first()
 
     def create_or_get(self, **kwargs):
         """
