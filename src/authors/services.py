@@ -11,11 +11,13 @@ class AuthorsService:
         self._authors_repository = authors_repository
         self._response = response
 
-    def list_authors(self, page: int, page_size: int):
+    def list_authors(self, page: int, page_size: int = 10):
         limit = page_size * page
         offset = (page - 1) * page_size
         authors = self._authors_repository.get_all(limit, offset)
-        authors = [AuthorsSchema.model_validate(to_dict(author)) for author in authors]
+        authors = [
+            AuthorsSchema.model_validate(to_dict(author)) for author in authors
+        ]
         return ListAuthors(authors=authors)
 
     def get_author(self, author_id: int):
@@ -29,4 +31,6 @@ class AuthorsService:
         return self._authors_repository.create(**author.model_dump())
 
     def update_author(self, author_id: str, author: AuthorsSchema):
-        return self._authors_repository.update(author_id, **author.model_dump())
+        return self._authors_repository.update(
+            author_id, **author.model_dump()
+        )

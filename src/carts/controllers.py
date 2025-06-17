@@ -12,14 +12,13 @@ router = APIRouter(prefix="/carts")
 def get_cart_items(
     response: Response,
     page: int = 1,
-    page_size: int = 10,
 ):
     user_id: str = (
         "75e8b351-f612-4eff-8dfe-6544e73a8df4",
     )  # remove this default value
     return CartsService(
         response, CartsModel, CartItemsModel, BooksModel
-    ).get_cart_items(user_id, page, page_size)
+    ).get_cart_items(user_id, page)
 
 
 @router.post("")

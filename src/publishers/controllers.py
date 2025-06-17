@@ -9,17 +9,21 @@ router = APIRouter(prefix="/publishers")
 
 @router.get("/{publisher_id}")
 def get_publisher(publisher_id: str, response: Response):
-    return PublishersService(response, PublishersModel).get_publisher(publisher_id)
+    return PublishersService(response, PublishersModel).get_publisher(
+        publisher_id
+    )
 
 
 @router.get("")
-def list_publishers(response: Response, page: int = 1, page_size: int = 10):
-    return PublishersService(response, PublishersModel).list_publishers(page, page_size)
+def list_publishers(response: Response, page: int = 1):
+    return PublishersService(response, PublishersModel).list_publishers(page)
 
 
 @router.post("")
 def create_publisher(response: Response, publisher: PublishersUpdateSchema):
-    return PublishersService(response, PublishersModel).create_publisher(publisher)
+    return PublishersService(response, PublishersModel).create_publisher(
+        publisher
+    )
 
 
 @router.put("/{publisher_id}")

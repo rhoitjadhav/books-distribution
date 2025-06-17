@@ -13,8 +13,8 @@ def get_author(author_id: str, response: Response):
 
 
 @router.get("")
-def list_authors(response: Response, page: int = 1, page_size: int = 10):
-    return AuthorsService(response, AuthorsModel).list_authors(page, page_size)
+def list_authors(response: Response, page: int = 1):
+    return AuthorsService(response, AuthorsModel).list_authors(page)
 
 
 @router.post("")
@@ -23,5 +23,9 @@ def create_author(response: Response, author: AuthorsUpdateSchema):
 
 
 @router.put("/{author_id}")
-def update_author(author_id: str, response: Response, author: AuthorsUpdateSchema):
-    return AuthorsService(response, AuthorsModel).update_author(author_id, author)
+def update_author(
+    author_id: str, response: Response, author: AuthorsUpdateSchema
+):
+    return AuthorsService(response, AuthorsModel).update_author(
+        author_id, author
+    )

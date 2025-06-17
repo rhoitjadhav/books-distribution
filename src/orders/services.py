@@ -34,7 +34,7 @@ class OrdersService:
         self._users_repository = users_repository
         self._response = response
 
-    def list_orders(self, user_id: str, page: int, page_size: int):
+    def list_orders(self, user_id: str, page: int, page_size: int = 10):
         limit, offset = get_limit_offset(page, page_size)
         orders = self._orders_repository.get_all(
             limit, offset, user_id=user_id

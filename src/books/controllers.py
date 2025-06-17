@@ -13,8 +13,8 @@ def get_book(book_id: str, response: Response):
 
 
 @router.get("")
-def list_books(response: Response, page: int = 1, page_size: int = 10):
-    return BooksService(response, BooksModel).list_books(page, page_size)
+def list_books(response: Response, page: int = 1):
+    return BooksService(response, BooksModel).list_books(page)
 
 
 @router.post("")

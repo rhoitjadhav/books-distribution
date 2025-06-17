@@ -27,7 +27,7 @@ class CartsService:
         self._response = response
 
     def get_cart_items(
-        self, user_id: str, page: int, page_size: int
+        self, user_id: str, page: int, page_size: int = 10
     ) -> list[CartItemsDetailSchema]:
         limit, offset = get_limit_offset(page, page_size)
         cart_items = self._cart_items_repository.get_cart_items(

@@ -7,11 +7,13 @@ from repositories.publishers.schemas import ListPublishers, PublishersSchema
 
 
 class PublishersService:
-    def __init__(self, response: Response, publishers_repository: PublishersModel):
+    def __init__(
+        self, response: Response, publishers_repository: PublishersModel
+    ):
         self._publishers_repository = publishers_repository
         self._response = response
 
-    def list_publishers(self, page: int, page_size: int):
+    def list_publishers(self, page: int, page_size: int = 10):
         limit = page_size * page
         offset = (page - 1) * page_size
         publishers = self._publishers_repository.get_all(limit, offset)

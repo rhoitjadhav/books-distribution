@@ -11,7 +11,7 @@ class BooksService:
         self._books_repository = books_repository
         self._response = response
 
-    def list_books(self, page: int, page_size: int):
+    def list_books(self, page: int, page_size: int = 10):
         limit, offset = get_limit_offset(page, page_size)
         books = self._books_repository.get_all(limit, offset)
         books = [BooksSchema.model_validate(to_dict(book)) for book in books]
