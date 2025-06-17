@@ -9,6 +9,13 @@ services:
     env_file:
       - .env
     environment:
+      BE_ENV: dev
+
+      # JWT configuration
+      JWT_SECRET_KEY: a-string-secret-at-least-256-bits-long
+      JWT_ACCESS_TOKEN_EXPIRE: 1440 # in minutes
+
+      # Database configuration
       DB_HOST: postgres
       DB_PORT: 5432
       DB_USER: postgres
