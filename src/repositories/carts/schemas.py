@@ -13,11 +13,15 @@ class CartSchema(BaseSchema):
     updated_at: datetime
 
 
-class CartItemSchema(BaseSchema):
-    quantity: Optional[int] = 1
+class CartItemUpdateSchema(BaseSchema):
+    quantity: int = 1
 
 
-class CartItemResponseSchema(CartItemSchema):
+class CartItemAddSchema(CartItemUpdateSchema):
+    book_id: str
+
+
+class CartItemResponseSchema(CartItemAddSchema):
     cart_item_id: Optional[UUID]
     cart_id: UUID
     created_at: datetime

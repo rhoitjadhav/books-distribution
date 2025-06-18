@@ -4,7 +4,7 @@ from auth import get_jwt_sub
 from carts.services import CartsService
 from repositories.books.models import BooksModel
 from repositories.carts.models import CartsModel, CartItemsModel
-from repositories.carts.schemas import CartItemSchema
+from repositories.carts.schemas import CartItemUpdateSchema, CartItemAddSchema
 
 router = APIRouter(prefix="/carts")
 
@@ -21,7 +21,7 @@ def get_cart_items(
 
 @router.post("")
 def add_to_cart(
-    cart_item: CartItemSchema,
+    cart_item: CartItemAddSchema,
     user_id: str = Depends(get_jwt_sub),
 ):
     return CartsService(CartsModel, CartItemsModel, BooksModel).add_to_cart(
@@ -32,7 +32,7 @@ def add_to_cart(
 @router.put("/{cart_item_id}")
 def update_cart_item(
     cart_item_id: str,
-    cart_item: CartItemSchema,
+    cart_item: CartItemUpdateSchema,
     _: str = Depends(get_jwt_sub),
 ):
     return CartsService(
