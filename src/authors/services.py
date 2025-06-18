@@ -1,4 +1,4 @@
-from fastapi.openapi.models import Response
+from fastapi import Response
 
 from common.helper import to_dict
 from common.schemas import ErrorSchema
@@ -18,7 +18,7 @@ class AuthorsService:
         authors = [AuthorsSchema.model_validate(to_dict(author)) for author in authors]
         return ListAuthors(authors=authors)
 
-    def get_author(self, author_id: int):
+    def get_author(self, author_id: str):
         author = self._authors_repository.get_by_pk(author_id)
         if not author:
             self._response.status_code = 404
