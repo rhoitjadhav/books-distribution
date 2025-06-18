@@ -14,12 +14,14 @@ class BaseModel(Base):
     __abstract__ = True
 
     @classmethod
-    def get(cls, **kwargs) -> Any:
+    def get(cls, options: tuple = (), *filters, **kwargs) -> Any:
         """
-        Retrieve a single record from the database based on the
-        provided keyword arguments.
+        Retrieve a single record from the database with specific columns
+        loaded, based on the provided filters and keyword arguments.
         """
-        stmt = select(cls).filter_by(**kwargs)
+        stmt = (
+            select(cls).filter(*filters).options(*options).filter_by(**kwargs)
+        )
         with SessionLocal() as session:
             return session.scalars(stmt).first()
 
@@ -37,6 +39,7 @@ class BaseModel(Base):
         with SessionLocal() as session:
             session.add(model_obj)
             session.commit()
+            session.refresh(model_obj)
             return to_dict(model_obj)
 
     @classmethod

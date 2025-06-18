@@ -8,8 +8,34 @@ class NotFoundException(Exception):
         self.error = error_msg
 
 
+class ConflictException(Exception):
+    def __init__(self, error_msg: str = "Conflict occurred"):
+        self.status_code = 409
+        self.error = error_msg
+
+
+class TokenExpiredException(Exception):
+    def __init__(self, error_msg: str = "Token has expired"):
+        self.status_code = 401
+        self.error = error_msg
+
+
+class TokenInvalidException(Exception):
+    def __init__(self, error_msg: str):
+        self.status_code = 401
+        self.error = {"message": "Token is invalid", "detail": error_msg}
+
+
 async def exception_handler(_: Request, exc: Exception):
-    if isinstance(exc, NotFoundException):
+    if isinstance(
+        exc,
+        (
+            NotFoundException,
+            ConflictException,
+            TokenExpiredException,
+            TokenInvalidException,
+        ),
+    ):
         return JSONResponse(
             status_code=exc.status_code, content={"error": exc.error}
         )

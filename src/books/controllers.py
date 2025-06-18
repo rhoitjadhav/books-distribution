@@ -5,6 +5,7 @@ from repositories.books.models import BooksModel
 from repositories.books.schemas import BooksSchema, BooksUpdateSchema
 
 router = APIRouter(prefix="/books")
+router_admin = APIRouter(prefix="/books", tags=["admin"])
 
 
 @router.get("/{book_id}")
@@ -13,15 +14,15 @@ def get_book(book_id: str, response: Response):
 
 
 @router.get("")
-def list_books(response: Response, page: int = 1, page_size: int = 10):
-    return BooksService(response, BooksModel).list_books(page, page_size)
+def list_books(response: Response, page: int = 1):
+    return BooksService(response, BooksModel).list_books(page)
 
 
-@router.post("")
+@router_admin.post("")
 def create_book(response: Response, book: BooksSchema):
     return BooksService(response, BooksModel).create_book(book)
 
 
-@router.put("/{book_id}")
+@router_admin.put("/{book_id}")
 def update_book(book_id: str, book: BooksUpdateSchema, response: Response):
     return BooksService(response, BooksModel).update_book(book_id, book)

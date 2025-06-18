@@ -1,10 +1,10 @@
 # Packages
-from fastapi import Response
+from typing import Optional
+
 
 # Modules
 from common.exceptions import NotFoundException
 from common.helper import get_limit_offset, to_dict
-from common.schemas import ErrorSchema
 from repositories.carts.models import CartItemsModel
 from repositories.orders.models import OrdersModel, OrderItemsModel
 from repositories.orders.schemas import (
@@ -12,23 +12,25 @@ from repositories.orders.schemas import (
     OrdersSchema,
     OrderItemsSchema,
 )
+from repositories.users.models import UsersModel
+from repositories.users.schemas import UserInfoSchema, UsersSchema
 
 
 class OrdersService:
     def __init__(
         self,
-        response: Response,
         orders_repository: OrdersModel,
         order_items_repository: OrderItemsModel,
         cart_items_repository: CartItemsModel,
+        users_repository: UsersModel,
     ):
         self._orders_repository = orders_repository
         self._order_items_repository = orders_repository
         self._order_items_repository = order_items_repository
         self._cart_items_repository = cart_items_repository
-        self._response = response
+        self._users_repository = users_repository
 
-    def list_orders(self, user_id: str, page: int, page_size: int):
+    def list_orders(self, user_id: str, page: int, page_size: int = 10):
         limit, offset = get_limit_offset(page, page_size)
         orders = self._orders_repository.get_all(
             limit, offset, user_id=user_id
@@ -48,10 +50,20 @@ class OrdersService:
             for item in order.items
         ]
 
-    def checkout_order(self, user_id: str, cart_item_ids: list[str]):
+    def checkout_order(
+        self,
+        user_info: UserInfoSchema,
+        cart_item_ids: list[str],
+        user_id: Optional[str],
+    ):
         if not cart_item_ids:
-            self._response.status_code = 400
-            return ErrorSchema(message="Cart item IDs cannot be empty")
+            raise NotFoundException("Cart item IDs cannot be empty")
+
+        if not user_id:
+            user = UsersSchema.model_validate(
+                self._users_repository.create_or_get(**user_info.dict())
+            )
+            user_id = user.user_id
 
         filters = [
             CartItemsModel.cart_item_id.in_(cart_item_ids),
@@ -71,6 +83,7 @@ class OrdersService:
             user_id=user_id,
             total_amount=total,
             status=OrderStatus.CONFIRMED,
+            user_meta_data=user_info.dict(),
         )
         order, _ = self._order_items_repository.create_order_items(
             order_kwargs, cart_items
