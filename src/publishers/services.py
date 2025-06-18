@@ -1,4 +1,4 @@
-from fastapi.openapi.models import Response
+from fastapi import Response
 
 from common.helper import to_dict
 from common.schemas import ErrorSchema
