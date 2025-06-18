@@ -1,4 +1,7 @@
-from books.controllers import router as books_router
+from books.controllers import (
+    router as books_router,
+    router_admin as books_router_admin,
+)
 from authors.controllers import router as authors_router
 from publishers.controllers import router as publishers_router
 from bulk_upload.controllers import router as bulk_upload_router
@@ -14,6 +17,7 @@ apis = [
 ]
 
 admin_only_apis = [
+    books_router_admin,
     bulk_upload_router,
     authors_router,
     publishers_router,
