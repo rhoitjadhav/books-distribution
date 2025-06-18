@@ -14,9 +14,6 @@ class CartSchema(BaseSchema):
 
 
 class CartItemSchema(BaseSchema):
-    book_id: str = (
-        "75e8b351-f612-4eff-8dfe-6544e73a8df4"  # remove this default value
-    )
     quantity: Optional[int] = 1
 
 
