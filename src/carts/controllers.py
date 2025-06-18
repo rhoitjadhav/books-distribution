@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Response, Depends
+from fastapi import APIRouter, Depends
 
 from auth import get_jwt_sub
 from carts.services import CartsService
@@ -32,12 +32,11 @@ def add_to_cart(
 @router.put("/{cart_item_id}")
 def update_cart_item(
     cart_item_id: str,
-    response: Response,
     cart_item: CartItemSchema,
     _: str = Depends(get_jwt_sub),
 ):
     return CartsService(
-        response, CartsModel, CartItemsModel, BooksModel
+        CartsModel, CartItemsModel, BooksModel
     ).update_cart_item(cart_item_id, cart_item)
 
 
