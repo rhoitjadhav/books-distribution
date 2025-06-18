@@ -23,7 +23,7 @@ class PublishersService:
         ]
         return ListPublishers(publishers=publishers)
 
-    def get_publisher(self, publisher_id: int):
+    def get_publisher(self, publisher_id: str):
         publisher = self._publishers_repository.get_by_pk(publisher_id)
         if not publisher:
             self._response.status_code = 404
