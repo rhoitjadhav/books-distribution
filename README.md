@@ -20,7 +20,7 @@ docker compose up -d
 http://localhost:8545/docs
 
 
-## Developmemt Setup
+## Development Setup
 Install the following.
 1. Python 3.12.8
 2. [Poetry](https://python-poetry.org/docs/#installation)
