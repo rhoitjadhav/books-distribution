@@ -3,11 +3,12 @@ from common.helper import get_limit_offset, to_dict
 from repositories.books.models import BooksModel
 from repositories.carts.models import CartsModel, CartItemsModel
 from repositories.carts.schemas import (
-    CartItemSchema,
     CartSchema,
     CartItemsDetailSchema,
     CartItemDeleteSchema,
     CartItemResponseSchema,
+    CartItemUpdateSchema,
+    CartItemAddSchema,
 )
 
 
@@ -38,7 +39,7 @@ class CartsService:
 
         return result
 
-    def add_to_cart(self, user_id: str, cart_item: CartItemSchema) -> dict:
+    def add_to_cart(self, user_id: str, cart_item: CartItemAddSchema) -> dict:
         book = self._books_repository.get_by_pk(cart_item.book_id)
         if not book:
             raise NotFoundException("Book not found")
@@ -61,7 +62,9 @@ class CartsService:
             )
         )
 
-    def update_cart_item(self, cart_item_id: str, cart_item: CartItemSchema):
+    def update_cart_item(
+        self, cart_item_id: str, cart_item: CartItemUpdateSchema
+    ):
         return self._cart_items_repository.update(
             cart_item_id, **cart_item.model_dump()
         )
