@@ -3,6 +3,7 @@ from uuid import UUID
 
 from common.utils import EnumBase
 from repositories.base import BaseSchema
+from repositories.books.schemas import BookMetaDataSchema
 from repositories.user_addresses.schemas import AddressRequestSchema
 from repositories.users.schemas import UserInfoSchema
 
@@ -26,7 +27,7 @@ class OrderItemsSchema(BaseSchema):
     order_item_id: UUID | None = None
     order_id: str
     book_id: str
-    book_meta_data: dict
+    book_meta_data: BookMetaDataSchema
     quantity: int
     total_amount: float
     created_at: datetime = None
