@@ -1,0 +1,12 @@
+[
+  {"model": "repositories.carts.models.CartItemsModel", "field": {"cart_item_id": "17ca16b8-b0f3-48d3-97e6-5d6bc5a8d747", "cart_id": "38c677f2-8f04-4bf7-8003-1b413fb4317f", "book_id": "b1f8b2ef", "quantity": 1}},
+  {"model": "repositories.carts.models.CartItemsModel", "field": {"cart_item_id": "bec41712-70d8-4349-9fde-52f87f8f0831", "cart_id": "70182673-c0dd-43ab-9071-c8920920948e", "book_id": "bji5bqsr", "quantity": 2}},
+  {"model": "repositories.carts.models.CartItemsModel", "field": {"cart_item_id": "13a215d5-ac75-450f-b89e-ab4d618e889e", "cart_id": "5a035da1-7b25-4994-8c44-8298a0d87404", "book_id": "b1f8b2ef", "quantity": 1}},
+  {"model": "repositories.carts.models.CartItemsModel", "field": {"cart_item_id": "c5f69fd9-2db4-4750-b8b5-0df4c1fff307", "cart_id": "cc032c5e-964b-4c4f-846f-d61a3adc1685", "book_id": "bji5bqsr", "quantity": 3}},
+  {"model": "repositories.carts.models.CartItemsModel", "field": {"cart_item_id": "fa7a35b2-ab5e-468e-89de-b65b907a186d", "cart_id": "89162187-66bc-4b25-af3a-4abf81ead312", "book_id": "b1f8b2ef", "quantity": 2}},
+  {"model": "repositories.carts.models.CartItemsModel", "field": {"cart_item_id": "e3e713be-2dd4-4cc8-a75d-a95801c9b453", "cart_id": "38da55b6-0917-4e71-b80d-5781686b67e8", "book_id": "bji5bqsr", "quantity": 1}},
+  {"model": "repositories.carts.models.CartItemsModel", "field": {"cart_item_id": "b85a5728-8da1-47b8-b7f9-cc3a0e8a5156", "cart_id": "a639cb87-76bf-44d6-99be-3b54d8b5b4d9", "book_id": "b1f8b2ef", "quantity": 1}},
+  {"model": "repositories.carts.models.CartItemsModel", "field": {"cart_item_id": "f631bce3-0a66-411e-9614-18f4f83ace2f", "cart_id": "06bdfa9a-d61d-458d-862b-e94087823cb5", "book_id": "bji5bqsr", "quantity": 2}},
+  {"model": "repositories.carts.models.CartItemsModel", "field": {"cart_item_id": "08d5f4b2-d948-4737-9ff9-87bc001dce69", "cart_id": "9f8979bb-3f49-4e65-bdd3-da9dc7204e39", "book_id": "b1f8b2ef", "quantity": 3}},
+  {"model": "repositories.carts.models.CartItemsModel", "field": {"cart_item_id": "cf39f616-874d-4792-8c75-8bc20dd36ddb", "cart_id": "1f4c08d9-3783-4804-a4f8-db26605669d6", "book_id": "bji5bqsr", "quantity": 1}}
+]
