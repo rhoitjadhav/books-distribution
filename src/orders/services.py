@@ -1,6 +1,7 @@
 # Packages
 from typing import Optional
 
+from fastapi import HTTPException
 from sqlalchemy.orm import load_only
 
 # Modules
@@ -85,6 +86,12 @@ class OrdersService:
         if not (address_id or address_info):
             raise NotFoundException(
                 "Address ID or address info are required for checkout."
+            )
+
+        if address_id and address_info:
+            raise HTTPException(
+                status_code=422,
+                detail="Please provide either address ID or address info, not both",
             )
 
         if not cart_item_ids:
