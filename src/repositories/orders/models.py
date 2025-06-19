@@ -5,7 +5,6 @@ import string
 import uuid
 from datetime import datetime
 
-from fastapi.encoders import jsonable_encoder
 from sqlalchemy import (
     ForeignKey,
     Integer,
@@ -23,7 +22,6 @@ from sqlalchemy.orm import relationship, joinedload
 from common.helper import to_dict
 from database import SessionLocal
 from repositories.base import BaseModel
-from repositories.carts.models import CartItemsModel
 from repositories.orders.schemas import OrderStatus
 
 
@@ -33,8 +31,15 @@ class OrdersModel(BaseModel):
     order_id = Column(String, primary_key=True)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
     user_meta_data = Column(JSONB, nullable=True, default=dict)
+    address_id = Column(
+        UUID(as_uuid=True),
+        ForeignKey("user_addresses.address_id"),
+        nullable=True,
+    )
+    address_meta_data = Column(JSONB, nullable=False, default=dict)
     total_amount = Column(Float, nullable=False)
     status = Column(String(50), nullable=False, default=OrderStatus.PENDING)
+
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(
         DateTime, server_default=func.now(), onupdate=func.now()
@@ -44,6 +49,7 @@ class OrdersModel(BaseModel):
     items = relationship(
         "OrderItemsModel", back_populates="order", cascade="all, delete-orphan"
     )
+    address = relationship("UserAddressesModel")
 
     @staticmethod
     def generate_order_id():
@@ -118,19 +124,10 @@ class OrderItemsModel(BaseModel):
 
     @staticmethod
     def create_order_items(
-        order_kwargs: dict, items: list[CartItemsModel]
+        order_kwargs: dict, items: list[dict]
     ) -> list[dict]:
         order = OrdersModel(**order_kwargs)
-        order_items = [
-            OrderItemsModel(
-                order_id=order.order_id,
-                book_id=item.book_id,
-                book_meta_data=jsonable_encoder(item.book),
-                quantity=item.quantity,
-                total_amount=item.book.price * item.quantity,
-            )
-            for item in items
-        ]
+        order_items = [OrderItemsModel(**item) for item in items]
 
         with SessionLocal() as session:
             session.add(order)
