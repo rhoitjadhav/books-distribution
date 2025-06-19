@@ -107,7 +107,7 @@ class OrdersService:
             address = self._ua_repository.get(address_id=address_id)
             if not address:
                 raise NotFoundException(
-                    "Address not found. Please provide a valid address ID"
+                    "Address not found. Please provide a valid address_id"
                 )
             address_info = AddressRequestSchema.model_validate(
                 to_dict(address)
@@ -157,7 +157,6 @@ class OrdersService:
                 publisher_id=book.publisher_id,
             )
             book_meta_data = BookMetaDataSchema(
-                book_id=item.book_id,
                 book_title=book.book_title,
                 author_name=author.name if author else "",
                 publisher_name=publisher.name if publisher else "",
@@ -177,7 +176,7 @@ class OrdersService:
             order_kwargs, order_items
         )
 
-        # self._cart_items_repository.delete(
-        #     CartItemsModel.cart_item_id.in_(cart_item_ids)
-        # )
+        self._cart_items_repository.delete(
+            CartItemsModel.cart_item_id.in_(cart_item_ids)
+        )
         return OrdersSchema.model_validate(order)

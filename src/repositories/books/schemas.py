@@ -40,7 +40,6 @@ class BooksUpdateSchema(BaseSchema):
 
 
 class BookMetaDataSchema(BaseSchema):
-    book_id: str
     book_title: str
     author_name: str
     publisher_name: str
