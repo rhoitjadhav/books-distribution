@@ -37,3 +37,10 @@ class BooksUpdateSchema(BaseSchema):
     subject: Optional[str]
     language: Optional[str]
     cover_type: Optional[CoverType]
+
+
+class BookMetaDataSchema(BaseSchema):
+    book_title: str
+    author_name: str
+    publisher_name: str
+    media: str

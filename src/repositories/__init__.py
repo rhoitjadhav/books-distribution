@@ -4,6 +4,7 @@ from repositories.publishers.models import PublishersModel
 from repositories.carts.models import CartsModel, CartItemsModel
 from repositories.orders.models import OrdersModel, OrderItemsModel
 from repositories.users.models import UsersModel
+from repositories.user_addresses.models import UserAddressesModel
 
 
 __all__ = [
@@ -15,4 +16,5 @@ __all__ = [
     "OrdersModel",
     "OrderItemsModel",
     "UsersModel",
+    "UserAddressesModel",
 ]

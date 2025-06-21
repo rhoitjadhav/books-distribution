@@ -46,6 +46,7 @@ async def exception_handler(_: Request, exc: Exception):
     return JSONResponse(
         status_code=500,
         content={"error": "Something went wrong", "detail": str(exc)},
+        # TODO: remove detail for production environment
     )
 
 

@@ -42,7 +42,7 @@ class BooksModel(BaseModel):
         """
         Generate book ID string with format:
         - b, stands for book
-        - 6 random uppercase alphanumeric chars
+        - 7 random uppercase alphanumeric chars
 
         Example
         -------

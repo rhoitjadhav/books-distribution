@@ -70,7 +70,7 @@ class CartsService:
         )
 
     def remove_cart_item(self, cart_item_id: str):
-        cart_item = self._cart_items_repository.get(id=cart_item_id)
+        cart_item = self._cart_items_repository.get(cart_item_id=cart_item_id)
         if not cart_item:
             raise NotFoundException("Cart item not found")
 
