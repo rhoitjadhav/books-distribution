@@ -14,15 +14,6 @@ class OrderStatus(EnumBase):
     PROCESSING = "processing"
 
 
-class OrdersSchema(BaseSchema):
-    order_id: str
-    user_id: UUID
-    total_amount: float
-    status: str
-    created_at: datetime = None
-    updated_at: datetime = None
-
-
 class OrderItemsSchema(BaseSchema):
     order_item_id: UUID | None = None
     order_id: str
@@ -32,6 +23,14 @@ class OrderItemsSchema(BaseSchema):
     total_amount: float
     created_at: datetime = None
     updated_at: datetime = None
+
+
+class OrderItemsGetSchema(BaseSchema):
+    order_item_id: UUID | None = None
+    book_id: str
+    book_meta_data: BookMetaDataSchema
+    quantity: int
+    total_amount: float
 
 
 class CheckoutRequestSchema(BaseSchema):
@@ -45,6 +44,15 @@ class OrderDetailsSchema(BaseSchema):
     order_id: str
     order_amount: float
     status: str
-    address_meta_data: dict
-    user_meta_data: dict
+    address_meta_data: AddressRequestSchema
+    user_meta_data: UserInfoSchema
     items: list[OrderItemsSchema]
+
+
+class OrdersSchema(BaseSchema):
+    order_id: str
+    total_amount: float
+    items: list[OrderItemsSchema] | list[OrderItemsGetSchema]
+    status: str
+    created_at: datetime = None
+    updated_at: datetime = None
