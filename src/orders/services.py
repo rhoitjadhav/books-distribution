@@ -2,7 +2,7 @@
 from typing import Optional
 
 from fastapi import HTTPException
-from sqlalchemy.orm import load_only
+from sqlalchemy.orm import load_only, joinedload
 
 # Modules
 from common.exceptions import NotFoundException
@@ -16,6 +16,7 @@ from repositories.orders.schemas import (
     OrdersSchema,
     OrderItemsSchema,
     OrderDetailsSchema,
+    OrderItemsGetSchema,
 )
 from repositories.publishers.models import PublishersModel
 from repositories.user_addresses.models import UserAddressesModel
@@ -39,7 +40,6 @@ class OrdersService:
         publishers_repository: PublishersModel = None,
     ):
         self._orders_repository = orders_repository
-        self._order_items_repository = orders_repository
         self._order_items_repository = order_items_repository
         self._cart_items_repository = cart_items_repository
         self._users_repository = users_repository
@@ -50,11 +50,33 @@ class OrdersService:
     def list_orders(self, user_id: str, page: int, page_size: int = 10):
         limit, offset = get_limit_offset(page, page_size)
         orders = self._orders_repository.get_all(
-            limit, offset, user_id=user_id
+            limit,
+            offset,
+            user_id=user_id,
+            options=[joinedload(OrdersModel.items)],
         )
-        return [
-            OrdersSchema.model_validate(to_dict(order)) for order in orders
-        ]
+        if not orders:
+            raise NotFoundException("No orders found for the user")
+
+        result = []
+        for order in orders:
+            result.append(
+                OrdersSchema.model_validate(
+                    {
+                        "order_id": order.order_id,
+                        "total_amount": order.total_amount,
+                        "items": [
+                            OrderItemsGetSchema.model_validate(to_dict(item))
+                            for item in order.items
+                        ],
+                        "status": order.status,
+                        "created_at": order.created_at,
+                        "updated_at": order.updated_at,
+                    }
+                )
+            )
+
+        return result
 
     def get_order(self, order_id: str, user_id: str):
         order = self._orders_repository.get_order_with_items(order_id, user_id)
@@ -91,7 +113,8 @@ class OrdersService:
         if address_id and address_info:
             raise HTTPException(
                 status_code=422,
-                detail="Please provide either address ID or address info, not both",
+                detail="Please provide either address ID or address info, "
+                "not both",
             )
 
         if not cart_item_ids:
@@ -172,11 +195,12 @@ class OrdersService:
                 ).model_dump()
             )
 
-        order, _ = self._order_items_repository.create_order_items(
+        order, items = self._order_items_repository.create_order_items(
             order_kwargs, order_items
         )
 
         self._cart_items_repository.delete(
             CartItemsModel.cart_item_id.in_(cart_item_ids)
         )
+        order["items"] = items
         return OrdersSchema.model_validate(order)
