@@ -27,11 +27,22 @@ class BaseModel(Base):
 
     @classmethod
     def get_all(
-        cls, limit: int = None, offset: int = None, *_, **kwargs
+        cls,
+        limit: int = None,
+        offset: int = None,
+        options: list = (),
+        *_,
+        **kwargs,
     ) -> list:
-        stmt = select(cls).filter_by(**kwargs).limit(limit).offset(offset)
+        stmt = (
+            select(cls)
+            .filter_by(**kwargs)
+            .limit(limit)
+            .offset(offset)
+            .options(*options)
+        )
         with SessionLocal() as session:
-            return session.scalars(stmt).all()
+            return session.scalars(stmt).unique().all()
 
     @classmethod
     def create(cls, **kwargs) -> dict:
