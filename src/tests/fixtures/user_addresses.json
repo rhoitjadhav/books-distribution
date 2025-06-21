@@ -1,0 +1,162 @@
+[
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "28789a80-12d2-45c2-82e8-3938a3e5e938",
+            "user_id": "36803905-cd33-484c-8e53-e1de79201e4b",
+            "full_name": "John Doe",
+            "address_line_1": "100 Elm St",
+            "address_line_2": "Apt 1",
+            "city": "City1",
+            "state": "State1",
+            "postal_code": "10000",
+            "country": "Country",
+            "phone": "1000000000",
+            "isd_code": "+1"
+        }
+    },
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "8d3e490f-aff4-469f-8cf1-66ba153d3e23",
+            "user_id": "7b26c884-75e5-481e-9b6e-3ea45b445cd3",
+            "full_name": "Jane Smith",
+            "address_line_1": "200 Elm St",
+            "address_line_2": "Apt 1",
+            "city": "City2",
+            "state": "State2",
+            "postal_code": "10001",
+            "country": "Country",
+            "phone": "1000000001",
+            "isd_code": "+1"
+        }
+    },
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "c1aa6283-9aaa-474f-833d-144a2ded4ee9",
+            "user_id": "4df58099-e3aa-4d6f-953d-50f2786cb99a",
+            "full_name": "Alice Brown",
+            "address_line_1": "300 Elm St",
+            "address_line_2": "Apt 1",
+            "city": "City3",
+            "state": "State3",
+            "postal_code": "10002",
+            "country": "Country",
+            "phone": "1000000002",
+            "isd_code": "+1"
+        }
+    },
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "c61be569-a2b0-4a28-9f75-97c3488287db",
+            "user_id": "9bea8bf5-f985-4388-aec4-abfb46fc0ece",
+            "full_name": "Bob Johnson",
+            "address_line_1": "400 Elm St",
+            "address_line_2": "Apt 1",
+            "city": "City4",
+            "state": "State4",
+            "postal_code": "10003",
+            "country": "Country",
+            "phone": "1000000003",
+            "isd_code": "+1"
+        }
+    },
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "539ae6c8-4c71-432e-b7f0-35a2aef88f44",
+            "user_id": "bf0573e4-d1d7-497c-bb36-f0bf15025d83",
+            "full_name": "Carol Davis",
+            "address_line_1": "500 Elm St",
+            "address_line_2": "Apt 1",
+            "city": "City5",
+            "state": "State5",
+            "postal_code": "10004",
+            "country": "Country",
+            "phone": "1000000004",
+            "isd_code": "+1"
+        }
+    },
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "a5e69965-2fc7-48e3-9ab4-9014a6eea4e1",
+            "user_id": "aa8ae292-0e16-4eed-aaf1-55f34b4fcebc",
+            "full_name": "David Miller",
+            "address_line_1": "600 Elm St",
+            "address_line_2": "Apt 1",
+            "city": "City6",
+            "state": "State6",
+            "postal_code": "10005",
+            "country": "Country",
+            "phone": "1000000005",
+            "isd_code": "+1"
+        }
+    },
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "502633df-b3f2-457b-a18e-e579f91e1f9d",
+            "user_id": "1eeae224-abb3-47a9-9e98-4b6124d45da4",
+            "full_name": "Eve Wilson",
+            "address_line_1": "700 Elm St",
+            "address_line_2": "Apt 1",
+            "city": "City7",
+            "state": "State7",
+            "postal_code": "10006",
+            "country": "Country",
+            "phone": "1000000006",
+            "isd_code": "+1"
+        }
+    },
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "71949c9d-3dda-497c-afbe-a1fa12a49cd5",
+            "user_id": "b7c8c496-a2f6-4bc9-8b62-84d5aebb73b5",
+            "full_name": "Frank Taylor",
+            "address_line_1": "800 Elm St",
+            "address_line_2": "Apt 1",
+            "city": "City8",
+            "state": "State8",
+            "postal_code": "10007",
+            "country": "Country",
+            "phone": "1000000007",
+            "isd_code": "+1"
+        }
+    },
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "68f36b76-fe92-43ca-990f-902ab02c71c9",
+            "user_id": "88244ce5-d1ee-455f-a265-c100ef3805c5",
+            "full_name": "Grace Anderson",
+            "address_line_1": "900 Elm St",
+            "address_line_2": "Apt 1",
+            "city": "City9",
+            "state": "State9",
+            "postal_code": "10008",
+            "country": "Country",
+            "phone": "1000000008",
+            "isd_code": "+1"
+        }
+    },
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "2a1e50d6-5150-4d02-ac12-86d84047791e",
+            "user_id": "131d1e08-77aa-440d-a7ea-74aed737537c",
+            "full_name": "Henry Thomas",
+            "address_line_1": "1000 Elm St",
+            "address_line_2": "Apt 1",
+            "city": "City10",
+            "state": "State10",
+            "postal_code": "10009",
+            "country": "Country",
+            "phone": "1000000009",
+            "isd_code": "+1"
+        }
+    }
+]
