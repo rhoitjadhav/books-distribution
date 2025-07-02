@@ -1,0 +1,162 @@
+[
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "1e86e69d-f162-43d0-87ee-b904b8956e96",
+            "user_id": "36803905-cd33-484c-8e53-e1de79201e4b",
+            "full_name": "John Doe",
+            "address_line_1": "1 Main St",
+            "address_line_2": "",
+            "city": "City1",
+            "state": "State1",
+            "postal_code": "00001",
+            "country": "Country",
+            "phone": "1000000000",
+            "isd_code": "+1"
+        }
+    },
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "301dd62d-1528-4937-b95e-b464f36f5790",
+            "user_id": "7b26c884-75e5-481e-9b6e-3ea45b445cd3",
+            "full_name": "Jane Smith",
+            "address_line_1": "2 Main St",
+            "address_line_2": "",
+            "city": "City2",
+            "state": "State2",
+            "postal_code": "00002",
+            "country": "Country",
+            "phone": "2000000000",
+            "isd_code": "+1"
+        }
+    },
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "90036373-b48a-4f08-9560-9ac9c353a1ae",
+            "user_id": "4df58099-e3aa-4d6f-953d-50f2786cb99a",
+            "full_name": "Alice Brown",
+            "address_line_1": "3 Main St",
+            "address_line_2": "",
+            "city": "City3",
+            "state": "State3",
+            "postal_code": "00003",
+            "country": "Country",
+            "phone": "3000000000",
+            "isd_code": "+44"
+        }
+    },
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "dbaad6a0-642f-44e6-a370-3f5bfd14e71c",
+            "user_id": "9bea8bf5-f985-4388-aec4-abfb46fc0ece",
+            "full_name": "Bob Johnson",
+            "address_line_1": "4 Main St",
+            "address_line_2": "",
+            "city": "City4",
+            "state": "State4",
+            "postal_code": "00004",
+            "country": "Country",
+            "phone": "4000000000",
+            "isd_code": "+44"
+        }
+    },
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "fe1c86d5-10eb-4076-9f08-012e435102a6",
+            "user_id": "bf0573e4-d1d7-497c-bb36-f0bf15025d83",
+            "full_name": "Carol Davis",
+            "address_line_1": "5 Main St",
+            "address_line_2": "",
+            "city": "City5",
+            "state": "State5",
+            "postal_code": "00005",
+            "country": "Country",
+            "phone": "5000000000",
+            "isd_code": "+91"
+        }
+    },
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "17a3e844-90c2-42ad-8d86-82c1a487395e",
+            "user_id": "aa8ae292-0e16-4eed-aaf1-55f34b4fcebc",
+            "full_name": "David Miller",
+            "address_line_1": "6 Main St",
+            "address_line_2": "",
+            "city": "City6",
+            "state": "State6",
+            "postal_code": "00006",
+            "country": "Country",
+            "phone": "6000000000",
+            "isd_code": "+91"
+        }
+    },
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "8f2be1de-489e-4129-8cb4-5973b1388f87",
+            "user_id": "1eeae224-abb3-47a9-9e98-4b6124d45da4",
+            "full_name": "Eve Wilson",
+            "address_line_1": "7 Main St",
+            "address_line_2": "",
+            "city": "City7",
+            "state": "State7",
+            "postal_code": "00007",
+            "country": "Country",
+            "phone": "7000000000",
+            "isd_code": "+81"
+        }
+    },
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "8f931a40-279e-490a-ac44-ef7e1434e36a",
+            "user_id": "b7c8c496-a2f6-4bc9-8b62-84d5aebb73b5",
+            "full_name": "Frank Taylor",
+            "address_line_1": "8 Main St",
+            "address_line_2": "",
+            "city": "City8",
+            "state": "State8",
+            "postal_code": "00008",
+            "country": "Country",
+            "phone": "8000000000",
+            "isd_code": "+81"
+        }
+    },
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "e68babd1-9368-4c06-8d1c-5a10246ae54d",
+            "user_id": "88244ce5-d1ee-455f-a265-c100ef3805c5",
+            "full_name": "Grace Anderson",
+            "address_line_1": "9 Main St",
+            "address_line_2": "",
+            "city": "City9",
+            "state": "State9",
+            "postal_code": "00009",
+            "country": "Country",
+            "phone": "9000000000",
+            "isd_code": "+61"
+        }
+    },
+    {
+        "model": "repositories.user_addresses.models.UserAddressesModel",
+        "field": {
+            "address_id": "596566fa-ec88-468c-b8ec-ca1220a050a9",
+            "user_id": "131d1e08-77aa-440d-a7ea-74aed737537c",
+            "full_name": "Henry Thomas",
+            "address_line_1": "10 Main St",
+            "address_line_2": "",
+            "city": "City10",
+            "state": "State10",
+            "postal_code": "00010",
+            "country": "Country",
+            "phone": "1000000001",
+            "isd_code": "+61"
+        }
+    }
+]
