@@ -8,11 +8,21 @@ from database import SessionLocal
 
 
 def get_fixtures():
-    for path, dirnames, filenames in os.walk("tests/fixtures"):
-        for filename in filenames:
-            file_path = os.path.join(path, filename)
-            with open(file_path, "r") as file:
-                yield json.load(file)
+    filenames = [
+        "users.json",
+        "user_addresses.json",
+        "authors.json",
+        "publishers.json",
+        "books.json",
+        "carts.json",
+        "cart_items.json",
+        "orders.json",
+        "order_items.json",
+    ]
+    for filename in filenames:
+        file_path = os.path.join("tests/fixtures", filename)
+        with open(file_path, "r") as file:
+            yield json.load(file)
 
 
 def populate_fixtures():
