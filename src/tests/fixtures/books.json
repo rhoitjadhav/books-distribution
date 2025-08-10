@@ -32,5 +32,141 @@
             "language": "English",
             "cover_type": "HARDBACK"
         }
+    },
+    {
+        "model": "repositories.books.models.BooksModel",
+        "field": {
+            "book_id": "b2f9c3d4",
+            "book_title": "Book 2",
+            "author_id": "AUTH1",
+            "publisher_id": "PUB2",
+            "books_meta_data": {},
+            "media_data": {},
+            "pages": 150,
+            "publication_year": 2012,
+            "price": 15.00,
+            "subject": "Science",
+            "language": "English",
+            "cover_type": "PAPERBACK"
+        }
+    },
+    {
+        "model": "repositories.books.models.BooksModel",
+        "field": {
+            "book_id": "b4k8m0n2",
+            "book_title": "Book 4",
+            "author_id": "AUTH2",
+            "publisher_id": "PUB1",
+            "books_meta_data": {},
+            "media_data": {},
+            "pages": 250,
+            "publication_year": 2013,
+            "price": 25.00,
+            "subject": "History",
+            "language": "English",
+            "cover_type": "PAPERBACK"
+        }
+    },
+    {
+        "model": "repositories.books.models.BooksModel",
+        "field": {
+            "book_id": "b5n8p7q6",
+            "book_title": "Book 5",
+            "author_id": "AUTH1",
+            "publisher_id": "PUB1",
+            "books_meta_data": {},
+            "media_data": {},
+            "pages": 300,
+            "publication_year": 2014,
+            "price": 30.00,
+            "subject": "Literature",
+            "language": "English",
+            "cover_type": "HARDBACK"
+        }
+    },
+    {
+        "model": "repositories.books.models.BooksModel",
+        "field": {
+            "book_id": "b6r1s2t3",
+            "book_title": "Book 6",
+            "author_id": "AUTH2",
+            "publisher_id": "PUB2",
+            "books_meta_data": {},
+            "media_data": {},
+            "pages": 350,
+            "publication_year": 2015,
+            "price": 35.00,
+            "subject": "Technology",
+            "language": "English",
+            "cover_type": "PAPERBACK"
+        }
+    },
+    {
+        "model": "repositories.books.models.BooksModel",
+        "field": {
+            "book_id": "b7u4v5w6",
+            "book_title": "Book 7",
+            "author_id": "AUTH1",
+            "publisher_id": "PUB2",
+            "books_meta_data": {},
+            "media_data": {},
+            "pages": 280,
+            "publication_year": 2016,
+            "price": 27.00,
+            "subject": "Mathematics",
+            "language": "English",
+            "cover_type": "HARDBACK"
+        }
+    },
+    {
+        "model": "repositories.books.models.BooksModel",
+        "field": {
+            "book_id": "b8x7y8z9",
+            "book_title": "Book 8",
+            "author_id": "AUTH2",
+            "publisher_id": "PUB1",
+            "books_meta_data": {},
+            "media_data": {},
+            "pages": 220,
+            "publication_year": 2017,
+            "price": 24.00,
+            "subject": "Cooking",
+            "language": "English",
+            "cover_type": "PAPERBACK"
+        }
+    },
+    {
+        "model": "repositories.books.models.BooksModel",
+        "field": {
+            "book_id": "b9a2b3c4",
+            "book_title": "Book 9",
+            "author_id": "AUTH1",
+            "publisher_id": "PUB1",
+            "books_meta_data": {},
+            "media_data": {},
+            "pages": 260,
+            "publication_year": 2018,
+            "price": 26.00,
+            "subject": "Travel",
+            "language": "English",
+            "cover_type": "HARDBACK"
+        }
+    },
+    {
+        "model": "repositories.books.models.BooksModel",
+        "field": {
+            "book_id": "b0d5e6f7",
+            "book_title": "Book 10",
+            "author_id": "AUTH2",
+            "publisher_id": "PUB2",
+            "books_meta_data": {},
+            "media_data": {},
+            "pages": 180,
+            "publication_year": 2019,
+            "price": 19.00,
+            "subject": "Fiction",
+            "language": "English",
+            "cover_type": "PAPERBACK"
+        }
     }
 ]
